@@ -22,7 +22,6 @@
 
 ⚠️ Please ENJOY and use RESPONSIBLY❗ 
 
-![hak 5]([https://github.com/I-Am-Jakoby/I-Am-Jakoby/raw/main/img/hak5-banner.png](https://ksr-ugc.imgix.net/assets/030/023/640/cc199ebea32361a449fa3f1c6edee0d8_original.jpg?ixlib=rb-4.1.0&crop=faces&w=1024&h=576&fit=crop&v=1596211983&auto=format&frame=1&q=92&s=f2ce7c5daba397ef75ebe925c391ec65))
 
 ## The Payloads 
 
