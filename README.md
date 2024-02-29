@@ -36,12 +36,7 @@ I did this with the intention of making room for Discord webhooks and Dropbox to
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments 
 
-* [Hak5](https://hak5.org/)
-* [Darren](https://github.com/hak5darren)
-* [UberGuidoZ](https://github.com/UberGuidoZ)
-
-
-
-
-<p align="right">(<a href="#top">back to top</a>)</p>
+[Hak5](https://hak5.org/)
+[Darren](https://github.com/hak5darren)
+[UberGuidoZ](https://github.com/UberGuidoZ)
 
