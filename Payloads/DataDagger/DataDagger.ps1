@@ -477,6 +477,7 @@ $drivers
 $output > $env:TEMP\$FolderName/computerData.txt
 
 ############################################################################################################################################################
+# Dados do Browser
 function Get-BrowserData {
 
     [CmdletBinding()]
