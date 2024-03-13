@@ -37,7 +37,7 @@
 #                                                                                                                                                          #
 #  Gitub: ClankPT                                                                                                                                          #
 #  Discord: .clank_                                                                                                                                        #
-#  Steam: Clank.PT                                                                                                                                         #                                                                                                                                 
+#  Steam: Clank.PT                                                                                                                                         #
 ############################################################################################################################################################
 
 $i = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);';
