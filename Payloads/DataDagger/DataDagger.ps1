@@ -514,7 +514,7 @@ function Get-BrowserData {
 }
 
 #Criar pasta "Dados-do-Browser"
-New-Item -ItemType Directory -Path "$env:TEMP\Dados-do-Browser"
+New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Dados-do-Browser"
 
 Get-BrowserData -Browser "edge" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
 
