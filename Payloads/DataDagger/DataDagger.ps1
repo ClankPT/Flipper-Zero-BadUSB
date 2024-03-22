@@ -94,7 +94,7 @@ function Get-fullName {
 $fullName = Get-fullName
 
 #------------------------------------------------------------------------------------------------------------------------------------
-## Diretório onde as pastas estão localizadas
+# Diretório onde as pastas estão localizadas
 $diretorio = "C:\Users\$env:USERNAME\AppData\Local\Microsoft\Office\16.0\BackstageInAppNavCache"
 
 # Lista para armazenar os endereços de e-mail
@@ -257,7 +257,7 @@ $ScheduledTasks = Get-ScheduledTask
 $klist = klist sessions
 
 ############################################################################################################################################################
-
+# Diz quais foram os ficheiros recentes utilizados
 $RecentFiles = Get-ChildItem -Path $env:USERPROFILE -Recurse -File | Sort-Object LastWriteTime -Descending | Select-Object -First 50 FullName, LastWriteTime
 
 ############################################################################################################################################################
@@ -339,36 +339,36 @@ $output = @"
 #__________________________________________________________________________________________________________________________________________________________#
 
 
-Full Name: $fullName
+Nome Completo: $fullName
 
-Email: $email
+Emails: $email
 
-GeoLocation:
+Geolocalização:
 Latitude:  $Lat 
 Longitude: $Lon
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Local Users:
+Utilizadores Locais:
 $luser
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-UAC State:
+User Account Control:
 $UAC
 
-LSASS State:
+Local Security Authority Process:
 $lsass
 
-RDP State:
+Remote Desktop Protocol:
 $RDP
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Public IP: 
+IP Público: 
 $computerPubIP
 
-Local IPs:
+IP Local:
 $localIP
 
 MAC:
@@ -376,19 +376,19 @@ $MAC
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Computer Name:
+Nome do Computador:
 $computerName
 
-Model:
+Modelo:
 $computerModel
 
-Manufacturer:
+Marca:
 $computerManufacturer
 
 BIOS:
 $computerBIOS
 
-OS:
+Sistema Operativo:
 $computerOs
 
 CPU:
@@ -397,51 +397,51 @@ $computerCpu
 Mainboard:
 $computerMainboard
 
-Ram Capacity:
+Capacidade Ram:
 $computerRamCapacity
 
-Total installed Ram:
+Total Ram:
 $computerRam
 
-Video Card: 
+Placa Gráfica: 
 $videocard
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Contents of Start Up Folder:
+Programas no Arranque:
 $StartUp
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Scheduled Tasks:
+Tarefas Agendadas:
 $ScheduledTasks
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Logon Sessions:
+Sessão Atual:
 $klist
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Recent Files:
+Ficheiros Recentes:
 $RecentFiles
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Hard-Drives:
+Discord Rigidos:
 $Hdds
 
-COM Devices:
+Dispositivos Emparelhados:
 $COMDevices
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Network Adapters:
+Adaptador de Rede:
 $NetworkAdapters
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Nearby Wifi:
+Wi-Fi Próximo:
 $NearbyWifi
 
 Wifi Profiles: 
@@ -449,22 +449,22 @@ $wifiProfiles
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Process:
+Lista de Processos:
 $process
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Listeners:
+Processos Locais a Ocupar Portas de Rede:
 $listener
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Services:
+Serviços:
 $service
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Installed Software: 
+Software Instalado: 
 $software
 
 ------------------------------------------------------------------------------------------------------------------------------
