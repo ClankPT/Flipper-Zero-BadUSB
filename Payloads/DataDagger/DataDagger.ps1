@@ -94,26 +94,28 @@ function Get-fullName {
 $fullName = Get-fullName
 
 #------------------------------------------------------------------------------------------------------------------------------------
+# Diretório onde as pastas estão localizadas
+$diretorio = "C:\Users\$env:USERNAME\AppData\Local\Microsoft\Office\16.0\BackstageInAppNavCache"
 
-function Get-email {
-    
-    try {
+# Lista para armazenar os endereços de e-mail
+$emails = @()
 
-    $email = (Get-CimInstance CIM_ComputerSystem).PrimaryOwnerName
-    return $email
+# Percorre todas as pastas no diretório
+foreach ($item in (Get-ChildItem -Path $diretorio -Directory)) {
+    # Procura por padrões de e-mail nos nomes das pastas
+    $match = $item.Name -match '([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})'
+    if ($match) {
+        # Adiciona o endereço de e-mail encontrado à lista de e-mails
+        $emails += $matches[0]
     }
-
-# If no email is detected function will return backup message for sapi speak
-
-    # Write Error is just for troubleshooting
-    catch {Write-Error "An email was not found" 
-    return "No Email Detected"
-    -ErrorAction SilentlyContinue
-    }        
 }
 
-$email = Get-email
+# Exibe os endereços de e-mail encontrados
+foreach ($email in $emails) {
+    Write-Output "Email encontrado: $email"
+}
 
+$email = $emails[0]  # Vamos usar apenas o primeiro e-mail encontrado
 
 #------------------------------------------------------------------------------------------------------------------------------------
 
