@@ -94,7 +94,7 @@ function Get-fullName {
 $fullName = Get-fullName
 
 #------------------------------------------------------------------------------------------------------------------------------------
-# Diretório onde as pastas estão localizadas
+## Diretório onde as pastas estão localizadas
 $diretorio = "C:\Users\$env:USERNAME\AppData\Local\Microsoft\Office\16.0\BackstageInAppNavCache"
 
 # Lista para armazenar os endereços de e-mail
@@ -102,20 +102,20 @@ $emails = @()
 
 # Percorre todas as pastas no diretório
 foreach ($item in (Get-ChildItem -Path $diretorio -Directory)) {
-    # Procura por padrões de e-mail nos nomes das pastas
-    $match = $item.Name -match '([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})'
+    # Procura por padrões de e-mail nos nomes das pastas, removendo "ODB-" do início, se presente
+    $match = $item.Name -match 'ODB-\s*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})'
     if ($match) {
         # Adiciona o endereço de e-mail encontrado à lista de e-mails
-        $emails += $matches[0]
+        $emails += $matches[1]  # Usamos $matches[1] para pegar apenas o endereço de e-mail capturado pela expressão regular
     }
 }
 
-# Exibe os endereços de e-mail encontrados
-foreach ($email in $emails) {
-    Write-Output "Email encontrado: $email"
-}
+# Concatena os endereços de e-mail em uma única string separada por ponto e vírgula
+$email = $emails -join "; "
 
-$email = $emails[0]  # Vamos usar apenas o primeiro e-mail encontrado
+# Exibe os endereços de e-mail encontrados
+Write-Output "Emails encontrados: $email"
+
 
 #------------------------------------------------------------------------------------------------------------------------------------
 
