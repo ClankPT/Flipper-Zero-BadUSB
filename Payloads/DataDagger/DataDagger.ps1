@@ -73,25 +73,31 @@ Copy-Item "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_hist
 
 ############################################################################################################################################################
 
-function Get-fullName {
+function Get-FullName {
+    # Obtém a lista de diretórios dentro de C:\Users
+    $users = Get-ChildItem -Path 'C:\Users' -Directory
 
-    try {
-    $fullName = (Get-LocalUser -Name $env:USERNAME).FullName
+    # Lista para armazenar os nomes de usuário
+    $userNames = @()
+
+    # Loop através dos diretórios
+    foreach ($user in $users) {
+        # Ignora os diretórios "Default" e "Public"
+        if ($user.Name -notin @("Default", "Public")) {
+            # Adiciona o nome do usuário à lista
+            $userNames += $user.Name
+        }
     }
- 
- # If no name is detected function will return $env:UserName 
 
-    # Write Error is just for troubleshooting 
-    catch {Write-Error "No name was detected" 
-    return $env:UserName
-    -ErrorAction SilentlyContinue
-    }
-
-    return $fullName 
-
+    # Retorna a lista de nomes de usuário
+    return $userNames
 }
 
-$fullName = Get-fullName
+# Chama a função Get-FullName e armazena o nome de usuário em $fullName
+$fullName = Get-FullName
+
+# Exibe o nome completo
+Write-Output "Nome Completo: $fullName"
 
 #------------------------------------------------------------------------------------------------------------------------------------
 # Diretório onde as pastas estão localizadas
