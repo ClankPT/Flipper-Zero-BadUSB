@@ -124,38 +124,11 @@ Write-Output "Emails encontrados: $email"
 
 
 #------------------------------------------------------------------------------------------------------------------------------------
+# Obtém a localização atual
+$location = Invoke-RestMethod -Uri "https://www.where-am-i.co/track-my-location" -Method Get
 
-function Get-GeoLocation{
-	try {
-	Add-Type -AssemblyName System.Device #Required to access System.Device.Location namespace
-	$GeoWatcher = New-Object System.Device.Location.GeoCoordinateWatcher #Create the required object
-	$GeoWatcher.Start() #Begin resolving current locaton
-
-	while (($GeoWatcher.Status -ne 'Ready') -and ($GeoWatcher.Permission -ne 'Denied')) {
-		Start-Sleep -Milliseconds 100 #Wait for discovery.
-	}  
-
-	if ($GeoWatcher.Permission -eq 'Denied'){
-		Write-Error 'Access Denied for Location Information'
-	} else {
-		$GeoWatcher.Position.Location | Select-Object Latitude,Longitude #Select the relevent results.
-	}
-	}
-    # Write Error is just for troubleshooting
-    catch {Write-Error "No coordinates found" 
-    return "No Coordinates found"
-    -ErrorAction SilentlyContinue
-    } 
-
-}
-
-$GeoLocation = Get-GeoLocation
-
-$GeoLocation = $GeoLocation -split " "
-
-$Lat = $GeoLocation[0].Substring(11) -replace ".$"
-
-$Lon = $GeoLocation[1].Substring(10) -replace ".$"
+# Exibe a localização
+Write-Output "Localização atual: Latitude $($location.latitude), Longitude $($location.longitude)"
 
 ############################################################################################################################################################
 
@@ -349,7 +322,7 @@ Nome Completo: $fullName
 
 Emails: $email
 
-Geolocalização:
+Geolocalização: $location
 Latitude:  $Lat 
 Longitude: $Lon
 
