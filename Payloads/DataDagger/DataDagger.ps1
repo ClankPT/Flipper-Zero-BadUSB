@@ -124,11 +124,17 @@ Write-Output "Emails encontrados: $email"
 
 
 #------------------------------------------------------------------------------------------------------------------------------------
-# Obtém a localização atual
-$location = Invoke-RestMethod -Uri "https://www.where-am-i.co/track-my-location" -Method Get
+#Geo-Localização
 
-# Exibe a localização
-Write-Output "Localização atual: Latitude $($location.latitude), Longitude $($location.longitude)"
+# Definir a URL do serviço de geolocalização
+$url = "https://ipinfo.io/json"
+
+# Fazer uma solicitação web para obter os dados de geolocalização
+$location = Invoke-RestMethod -Uri $url
+
+# Exibir os dados de geolocalização
+$location
+
 
 ############################################################################################################################################################
 
