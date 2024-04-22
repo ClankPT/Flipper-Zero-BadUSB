@@ -127,10 +127,10 @@ Write-Output "Emails encontrados: $email"
 #Geo-Localização
 
 # Definir a URL do serviço de geolocalização
-$url = "https://api.ipgeolocation.io/ipgeo?apiKey=free&fields=latitude,longitude"
+
 
 # Fazer uma solicitação web para obter os dados de geolocalização
-$location = Invoke-RestMethod -Uri $url
+
 
 # Exibir os dados de geolocalização
 $location
