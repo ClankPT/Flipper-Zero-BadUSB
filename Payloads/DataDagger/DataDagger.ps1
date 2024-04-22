@@ -74,15 +74,11 @@ New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Tree-do-PC"
 #Move o ficheiro para o sitio correto
 Move-Item -Path "$env:TMP\$FolderName\Tree-do-PC" -Destination "$env:TEMP\$FolderName\Tree-do-PC\tree.txt"
 
+#Criar pasta
+New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Historico-Powershell"
+
 # Histórico da PowerShell "cria o ficheiro"
-Copy-Item "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt" -Destination  $env:TEMP\$FolderName\Powershell-History.txt
-
-#Cria a pasta "Histórico-Powershell"
-New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Histórico-Powershell"
-
-#Move o ficheiro para o sitio correto
-Move-Item -Path "$env:TMP\$FolderName\Histórico-Powershell" -Destination "$env:TEMP\$FolderName\Histórico-Powershell\Powershell-History.txt"
-
+Copy-Item "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt" -Destination  "$env:TEMP\$FolderName\Historico-Powershell\Powershell-History.txt"
 ############################################################################################################################################################
 
 function Get-FullName {
