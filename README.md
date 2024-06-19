@@ -1,42 +1,20 @@
 <div align=center>
 
-# 💀 BadUSB 💀
+## 🚀 **BadUSB para Flipper Zero** 🤖💻
 
-        
+---
 
-# Table of Contents
+## 📝 **Descrição**
 
-[Description](#Description)
-
-[The Payloads](#The-Payloads)
-
-[Acknowledgments](#Acknowledgments)
-
-
-
-# Unleash the power of your Flipper 🤓💻
-
-***  
+Bem-vindo ao meu repositório de BadUSB para o Flipper Zero! Aqui vais encontrar uma coleção de scripts e payloads maliciosos otimizados para serem executados no Flipper Zero, transformando-o em uma ferramenta poderosa para testes de segurança e demonstrações práticas. Os payloads são personalizáveis. Desfruta de uma nova dimensão de hacking ético e demonstrações incriveis!
 
 ## Description 
 
-⚠️ Please ENJOY and use RESPONSIBLY❗ 
+⚠️ Por Favor usem com responsabilidade❗ 
 
 
 ## The Payloads 
 
-This repository has been optimized to facilitate plug and play functionality. 
 
-I use the domain `bit.ly/ClankPT ` for the sole purpose of creating my own short URLs.
-
-I did this with the intention of making room for Discord webhooks and Dropbox tokens to fit in my one-liners.
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments 
-
-[Hak5](https://hak5.org/)
-[Darren](https://github.com/hak5darren)
-[UberGuidoZ](https://github.com/UberGuidoZ)
+Eu uso o domínio `cutt.ly/ClankPT ` com o único propósito de criar meus próprios 
 
