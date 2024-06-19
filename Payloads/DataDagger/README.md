@@ -1,4 +1,4 @@
-![Logo](https://i.ibb.co/1rpRChk/mini-mini-TH.png)
+![Logo](https://raw.githubusercontent.com/ClankPT/Flipper-Zero-BadUSB/main/Imagem/mini%20mini%20TH.png)
 
 <!-- TABLE OF CONTENTS -->
 <details>
