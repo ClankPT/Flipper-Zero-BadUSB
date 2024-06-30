@@ -70,7 +70,7 @@ tree $Env:userprofile /a /f >> $env:TEMP\$FolderName\tree.txt
 New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Tree-do-PC"
 
 #Move o ficheiro para o sitio correto
-Move-Item -Path "$env:TMP\$FolderName\Tree-do-PC" -Destination "$env:TEMP\$FolderName\Tree-do-PC\tree.txt"
+Move-Item -Path "$env:TMP\$FolderName\tree.txt" -Destination "$env:TEMP\$FolderName\Tree-do-PC\tree.txt"
 
 #Criar pasta
 New-Item -ItemType Directory -Path "$env:TEMP\$FolderName\Historico-Powershell"
