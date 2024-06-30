@@ -250,10 +250,6 @@ $ScheduledTasks = Get-ScheduledTask
 $klist = klist sessions
 
 ############################################################################################################################################################
-# Diz quais foram os ficheiros recentes utilizados
-$RecentFiles = Get-ChildItem -Path $env:USERPROFILE -Recurse -File | Sort-Object LastWriteTime -Descending | Select-Object -First 50 FullName, LastWriteTime
-
-############################################################################################################################################################
 
 # Apanha informações dos discos
 $driveType = @{
