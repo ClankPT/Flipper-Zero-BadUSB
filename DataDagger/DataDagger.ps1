@@ -83,23 +83,23 @@ function Get-FullName {
     # Obtém a lista de diretórios dentro de C:\Users
     $users = Get-ChildItem -Path 'C:\Users' -Directory
 
-    # Lista para armazenar os nomes de usuário
+    # Lista para armazenar os nomes de utilizador
     $userNames = @()
 
     # Loop através dos diretórios
     foreach ($user in $users) {
         # Ignora os diretórios "Default" e "Public"
         if ($user.Name -notin @("Default", "Public")) {
-            # Adiciona o nome do usuário à lista
+            # Adiciona o nome do utilizador à lista
             $userNames += $user.Name
         }
     }
 
-    # Retorna a lista de nomes de usuário
+    # Retorna a lista de nomes de utilizador
     return $userNames
 }
 
-# Chama a função Get-FullName e armazena o nome de usuário em $fullName
+# Chama a função Get-FullName e armazena o nome de utilizador em $fullName
 $fullName = Get-FullName
 
 # Exibe o nome completo
