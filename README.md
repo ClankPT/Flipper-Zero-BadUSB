@@ -6,7 +6,7 @@
 
 ## 📝 **Descrição**
 
-Bem-vindo ao meu repositório de BadUSB para o Flipper Zero! Aqui vais encontrar uma coleção de scripts e payloads maliciosos otimizados para serem executados no Flipper Zero, transformando-o em uma ferramenta poderosa para testes de segurança e demonstrações práticas. Os payloads são personalizáveis. Desfruta de uma nova dimensão de hacking ético e demonstrações incriveis!
+Bem-vindo ao meu repositório de BadUSB para o Flipper Zero! Aqui vão encontrar um de script maliciosos otimizado para  executar no Flipper Zero, transformando-o em uma ferramenta poderosa para testes de segurança e demonstrações práticas. O script é personalizável. Desfruta de uma nova dimensão de hacking ético e demonstrações incriveis!
 
 ## Description 
 
